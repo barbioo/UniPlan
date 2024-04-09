@@ -1,0 +1,23 @@
+{
+	"id": "7c380d2c50d045a185b6d258dbb59d61",
+	"object": "chat.completion",
+	"created": 1711571579,
+	"model": "open-mistral-7b",
+	"choices": [
+		{
+			"index": 0,
+			"message": {
+				"role": "assistant",
+				"content": "{\n\"3/8\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili\"],\n\"3/9\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Sviluppo di applicazioni mobili\"],\n\"3/10\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Opportunità di mercato\"],\n\"3/11\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Requisiti tecnici per Apple (iOS)\"],\n\"3/12\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Requisiti tecnici per Google (Android)\"],\n\"3/13\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Sfide\"],\n\"3/14\": [\"Introduzione alla progettazione e allo sviluppo di applicazioni mobili - Framework cross-platform (intro)\"],\n\"3/15\": [\"Introduzione alla progettazione di interfaccia utente\"],\n\"3/16\": [\"Introduzione alla progettazione di interfaccia utente - Linee guida per la progettazione di un'interfaccia utente non solo bella, ma anche usabile\"],\n\"3/17\": [\"Introduzione alla progettazione di interfaccia utente - Le persone al primo posto\"],\n\"3/18\": [\"Introduzione alla progettazione di interfaccia utente - Progettazione Mobile First e Responsive Design\"],\n\"3/19\": [\"Introduzione alla progettazione di interfaccia utente - Imparare ad usare i colori, i font, e in generale i componenti grafici più appropriati per ogni contesto\"],\n\"3/20\": [\"Sviluppo di applicazioni per dispositivi Android - Introduzione alla piattaforma Android\"],\n\"3/21\": [\"Sviluppo di applicazioni per dispositivi Android - Ambiente di sviluppo: Android Studio, Google Software Development kit e le versioni, Genymotion e debugger\"],\n\"3/22\": [\"Sviluppo di applicazioni per dispositivi Android - Ciclo di vita di un'applicazione: le Activity e i Fragment\"],\n\"3/23\": [\"Sviluppo di applicazioni per dispositivi Android - Layout e widget di base\"],\n\"3/24\": [\"Sviluppo di applicazioni per dispositivi Android - La concorrenza: threads e task asincroni\"],\n\"3/25\": [\"Sviluppo di applicazioni per dispositivi Android - Oltre l'aspetto grafico: Content provider e Service\"],\n\"3/26\": [\"Sviluppo di applicazioni per dispositivi Android - Architettura di un'applicazione Android: Model-View-Presenter\"],\n\"3/27\": [\"Sviluppo di applicazioni per dispositivi Android - Pubblicazione di un'applicazione sul Google Play Store\"],\n\"3/28\": [\"Introduzione al concetto di Web App: backend e frontend\"],\n\"3/29\": [\"Ambiente di sviluppo: editor, strumenti per sviluppatori (Chrome e Firefox), documentazione online (MDN)\"],\n\"3/30\": [\"Introduzione all'HTML: definire la struttura di una pagina Web\"],\n\"3/31\": [\"Introduzione al CSS: definire lo stile di una pagina Web\"],\n\"4/1\": [\"Introduzione a JavaScript: definire la logica associata ad una pagina Web\"],\n\"4/2\": [\"Utilizzo di un framework per la realizzazione di una Web App (e.g, Bootstrap)\"],\n\"4/3\": [\"Deployment di una Web App\"]\n}",
+				"tool_calls": null
+			},
+			"finish_reason": "stop",
+			"logprobs": null
+		}
+	],
+	"usage": {
+		"prompt_tokens": 719,
+		"total_tokens": 1663,
+		"completion_tokens": 944
+	}
+}
