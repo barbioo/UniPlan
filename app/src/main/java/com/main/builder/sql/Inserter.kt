@@ -62,9 +62,9 @@ class Inserter(
         this.query = "UPDATE $tableName\nSET last_log = '$date' WHERE userid  = $userid";
     }
 
-    fun insertNewUser(userid: String, name: String, surname: String, last_log: String, password: String) {
-        this.query = "INSERT INTO users (userid, name, surname, last_log, password)";
-        this.query += "($userid, $name, $surname, $last_log, $password)";
+    fun insertNewUser(userid: String, name: String, surname: String, last_log: String, password: String, mail: String) {
+        this.query = "INSERT INTO users (userid, name, surname, last_log, password, mail)";
+        this.query += "($userid, $name, $surname, $last_log, $password, $mail)";
     }
 
 }

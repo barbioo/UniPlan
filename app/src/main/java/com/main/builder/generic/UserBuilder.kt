@@ -1,15 +1,20 @@
-package com.builder.generic
+package com.main.builder.generic
 
 import android.content.Context
 import com.builder.sql.Finder
 import com.builder.sql.Inserter
+import io.github.cdimascio.dotenv.Dotenv
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import java.io.IOException
 import java.util.Date
 import java.util.Properties
 
-class UserBuilder(
+open class UserBuilder(
+    private val applicationcontext: Context,
     private val inserter: Inserter?,
-    private val finder: Finder?,
+    private val finder: Finder?
 ) {
 
     companion object {
@@ -35,12 +40,12 @@ class UserBuilder(
 
         private fun iConstructor(applicationcontext: Context): UserBuilder {
             val settings = getSettings(applicationcontext);
-            return UserBuilder(Inserter(settings[0], settings[1], settings[2]), null);
+            return UserBuilder(applicationcontext, Inserter(settings[0], settings[1], settings[2]), null);
         }
 
         private fun fConstructor(applicationcontext: Context): UserBuilder {
             val settings = getSettings(applicationcontext);
-            return UserBuilder(null, Finder(settings[0], settings[1], settings[2]));
+            return UserBuilder(applicationcontext, null, Finder(settings[0], settings[1], settings[2]));
         }
 
         fun build(applicationcontext: Context, option: String): UserBuilder? {
@@ -105,12 +110,33 @@ class UserBuilder(
     }
 
     fun newUser(infList: Array<String>) {
-        inserter?.insertNewUser(infList[0], infList[1], infList[2], prettyDate(Date()), encrypt(infList[4]));
-        inserter?.executeQuery();
+        val t = Thread {
+            inserter?.insertNewUser(infList[0], infList[1], infList[2], prettyDate(Date()), encrypt(infList[3]), infList[4]);
+            inserter?.executeQuery();
+        }
+        t.start();
+        val f = File(applicationcontext.filesDir, "settings.env");
+        if (f.exists()) {
+            var content = f.readText();
+            if(content.contains("USERNAME=")) {
+                content = content.replace("USERNAME=", "USERNAME=${infList[0]}");
+            } else {
+                content += "\nUSERNAME=${infList[0]}"
+            }
+            if(content.contains("PASSWORD=")) {
+                content = content.replace("PASSWORD=", "PASSWORD=${infList[4]}");
+            } else {
+                content += "\nPASSWORD=${infList[4]}"
+            }
+            val out = BufferedWriter(FileWriter(f))
+            out.write(content);
+            out.flush();
+            out.close();
+        }
     }
 
     fun getUser(username: String, password: String): Array<String> {
-        val res: Array<String> = Array(4) {""};
+        val res: Array<String> = Array(5) {""};
         finder?.renewQuery();
         finder?.setQuery("*", "users", "userid = '$username' AND password = '${encrypt(password)}'");
         val resSet = finder?.execQuery();
@@ -120,6 +146,7 @@ class UserBuilder(
                 res[1] = resSet.getNString("name");
                 res[2] = resSet.getNString("surname");
                 res[3] = resSet.getNString("password");
+                res[4] = resSet.getNString("mail");
             }
         }
         return res;
@@ -140,6 +167,30 @@ class UserBuilder(
             }
         }
         return res;
+    }
+
+    private fun localLogExists(): Boolean {
+        val f = File(applicationcontext.filesDir, "settings.env");
+        if (f.exists()) {
+            val reader = Dotenv.configure().directory(f.parent).load();
+            return (reader["USERNAME"] != "");
+        }
+        throw IOException("No settings file")
+    }
+
+
+    fun localLog(): Array<String> {
+        if (localLogExists()) {
+            val res = Array<String>(2) { "" };
+            val f = File(applicationcontext.filesDir, "settings.env");
+            if (f.exists()) {
+                val reader = Dotenv.configure().directory(f.parent).load();
+                res[0] = reader["USERNAME"];
+                res[1] = reader["PASSWORD"];
+                return res;
+            }
+        }
+        throw IOException("No settings file");
     }
 
 }
