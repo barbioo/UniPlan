@@ -37,11 +37,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86e143c2-07c7-492a-9a43-2ebe89ced42f" name="Changes" comment="Schermate aggiunte">
+    <list default="true" id="86e143c2-07c7-492a-9a43-2ebe89ced42f" name="Changes" comment="Schermate aggiunte 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uniplan/Plan.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uniplan/Summaries.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/uniplan/calendar.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713268789872</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Schermate aggiunte 2">
+      <option name="closed" value="true" />
+      <created>1713270431616</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713270431617</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -264,6 +269,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Primo Commit" />
     <MESSAGE value="Schermate aggiunte" />
-    <option name="LAST_COMMIT_MESSAGE" value="Schermate aggiunte" />
+    <MESSAGE value="Schermate aggiunte 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Schermate aggiunte 2" />
   </component>
 </project>
