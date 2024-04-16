@@ -1,4 +1,4 @@
-package com.main.builder.generic
+package com.builder.generic
 
 import android.content.Context
 import com.builder.sql.Finder
@@ -124,7 +124,7 @@ open class UserBuilder(
                 content += "\nUSERNAME=${infList[0]}"
             }
             if(content.contains("PASSWORD=")) {
-                content = content.replace("PASSWORD=", "PASSWORD=${infList[4]}");
+                content = content.replace("PASSWORD=", "PASSWORD=${encrypt(infList[4])}");
             } else {
                 content += "\nPASSWORD=${infList[4]}"
             }

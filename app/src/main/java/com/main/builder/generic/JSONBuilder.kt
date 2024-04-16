@@ -4,28 +4,35 @@ import android.content.Context
 import objects.*;
 import java.io.IOException
 import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 import java.util.Calendar
 import java.util.Properties
 
 class JSONBuilder(
     private var json: String,
-    private val applicationContext: Context,
-    private val fileName: String
+    private val applicationContext: Context
     ) {
 
-    constructor(applicationContext: Context, fileName: String) : this("", applicationContext, fileName);
+    constructor(applicationContext: Context, examSubject: String, examDate: String) : this(
+        readFileContent(applicationContext, examSubject, examDate),
+        applicationContext
+    );
+
+    companion object {
+        private fun readFileContent(applicationContext: Context, examSubject: String, examDate: String): String {
+            return try {
+                val inp = BufferedReader(FileReader(File(applicationContext.getExternalFilesDir("data_responses"),  "$examSubject-$examDate.json")));
+                return inp.readText();
+            } catch (e: IOException) {
+                return e.message.toString();
+            }
+        }
+    }
 
     fun getJson(): String {
         return json;
-    }
-
-    init {
-        try {
-        val reader = applicationContext.assets.open(fileName);
-        json = reader.bufferedReader().readText();
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
     }
 
     fun buildOccurrence(subject: String): MutableList<Occurrence> {
