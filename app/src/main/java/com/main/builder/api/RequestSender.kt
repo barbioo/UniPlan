@@ -29,6 +29,7 @@ class RequestSender(
         this.userRequest = "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 10,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
     }
 
+    //restituisce una risposta json
     fun sendStandardCall(): String {
         return try {
             val client = OkHttpClient();
@@ -50,6 +51,6 @@ class RequestSender(
             e.message.toString()
         }
     }
-
+    //questa risposta è scritta nel file "x" che restituisce il content con data e nome materia
 
 }
