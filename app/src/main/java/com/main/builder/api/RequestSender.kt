@@ -1,4 +1,4 @@
-package com.builder.api
+package com.main.builder.api
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -12,12 +12,12 @@ class RequestSender(
 ) {
     constructor(url: String) : this(
         URL(url),
-        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 10,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1080,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
     )
 
     constructor() : this(
         URL("https://api.mistral.ai/v1/chat/completions"),
-        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 10,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": Try\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1080,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
     )
 
     fun setUserRequest(userRequest: String): String {
@@ -26,10 +26,13 @@ class RequestSender(
     }
 
     fun renewUserRequest() {
-        this.userRequest = "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 10,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        this.userRequest = "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
     }
 
-    //restituisce una risposta json
+    fun getCallString(): String {
+        return userRequest;
+    }
+
     fun sendStandardCall(): String {
         return try {
             val client = OkHttpClient();
@@ -42,15 +45,11 @@ class RequestSender(
                 .post(userRequest.toRequestBody(mediaType))
                 .build();
             val res = client.newCall(request).execute();
-            if (res.isSuccessful) {
-                return res.body?.string().toString();
-            } else {
-                return throw Exception("Request not ok");
-            }
+            return res.body?.string().toString();
         } catch (e: Exception) {
             e.message.toString()
         }
     }
-    //questa risposta è scritta nel file "x" che restituisce il content con data e nome materia
+
 
 }

@@ -1,4 +1,4 @@
-package com.builder.generic;
+package com.main.builder.generic
 
 import android.content.Context
 import objects.*;
@@ -13,7 +13,7 @@ import java.util.Properties
 class JSONBuilder(
     private var json: String,
     private val applicationContext: Context
-    ) {
+) {
 
     constructor(applicationContext: Context, examSubject: String, examDate: String) : this(
         readFileContent(applicationContext, examSubject, examDate),
@@ -23,10 +23,15 @@ class JSONBuilder(
     companion object {
         private fun readFileContent(applicationContext: Context, examSubject: String, examDate: String): String {
             return try {
-                val inp = BufferedReader(FileReader(File(applicationContext.getExternalFilesDir("data_responses"),  "$examSubject-$examDate.json")));
-                return inp.readText();
+                val f = File(applicationContext.getExternalFilesDir("data_responses"),  "$examSubject-$examDate.json");
+                if (f.exists()){
+                    val inp = BufferedReader(FileReader(f));
+                    inp.readText();
+                } else {
+                    throw IOException("No such file")
+                }
             } catch (e: IOException) {
-                return e.message.toString();
+                e.message.toString();
             }
         }
     }
@@ -61,20 +66,13 @@ class JSONBuilder(
             }
         }
 
-        fun getPrettyDate(date: String): String {
-            val tmp = date.split("/");
-            var newDate = tmp[1] + "-" + tmp[0] + "-";
-            newDate += Calendar.getInstance().get(Calendar.YEAR);
-            return newDate;
-        }
-
         fun getTopicAtDate(date: String): String {
             return try {
                 val jsonObject = JSONObject(getRespondContent());
-                val topic = jsonObject.getJSONArray(date).getString(0);
+                val topic = jsonObject.getString(date);
                 topic;
             } catch (e: Exception) {
-                ""
+                e.message.toString()
             }
         }
 
@@ -90,7 +88,7 @@ class JSONBuilder(
             applyAttribute(tmp, 1, subject);
 
             //date setting
-            applyAttribute(tmp, 2, getPrettyDate(date));
+            applyAttribute(tmp, 2, date);
 
             //topic setting
             applyAttribute(tmp, 3, getTopicAtDate(date));

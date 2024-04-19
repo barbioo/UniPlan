@@ -1,4 +1,4 @@
-package com.builder.generic
+package com.main.builder.generic
 
 import android.content.Context
 import com.builder.sql.Finder
@@ -115,10 +115,10 @@ open class UserBuilder(
             inserter?.executeQuery();
         }
         t.start();
-        val f = File(applicationcontext.filesDir, "settings.env");
+        val f = File(applicationcontext.getExternalFilesDir("user_information"), "settings.env");
         if (f.exists()) {
             var content = f.readText();
-            if(content.contains("USERNAME=")) {
+            if (content.contains("USERNAME=")) {
                 content = content.replace("USERNAME=", "USERNAME=${infList[0]}");
             } else {
                 content += "\nUSERNAME=${infList[0]}"
@@ -132,6 +132,10 @@ open class UserBuilder(
             out.write(content);
             out.flush();
             out.close();
+        } else {
+            f.createNewFile();
+            val out = BufferedWriter(FileWriter(f));
+            out.write("USERNAME=${infList[0]}\nPASSWORD=${encrypt(infList[4])}")
         }
     }
 
