@@ -1,4 +1,4 @@
-package com.main.builder.api
+package com.builder.api
 
 import android.content.Context
 import java.io.BufferedReader
@@ -10,7 +10,7 @@ import java.io.IOException
 class ResponseWriter(
     private val applicationContext: Context,
     private var out: BufferedWriter,
-) {
+    ) {
 
     companion object {
         private fun createWriter(applicationContext: Context, examSubject: String, examDate: String): BufferedWriter {

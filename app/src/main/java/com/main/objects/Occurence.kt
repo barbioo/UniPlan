@@ -3,6 +3,7 @@ package objects;
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.provider.CalendarContract
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,7 +12,8 @@ class Occurrence(
     private var date: String,
     private var topic: String,
     private var user: String
-) {
+) : Serializable {
+
     constructor() : this("default", "1-1-2024", "default", "default")
 
     fun getSubject(): String {

@@ -1,6 +1,8 @@
-package com.main.builder.api
+package com.builder.api
 
 import android.content.Context
+import android.util.MutableBoolean
+import okhttp3.internal.toImmutableList
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -37,6 +39,11 @@ class RequestsFileManager(
                 throw IOException("Something went wrong whit writer creation: ${e.stackTrace}")
             }
         }
+
+        fun extractSubFromFileName(fileName: String): String {
+            return fileName.split("-")[0];
+        }
+
     }
 
     constructor(applicationContext: Context): this (
@@ -58,16 +65,19 @@ class RequestsFileManager(
         }
     }
 
-    fun getFileName(examSubject: String, examDate: String): String {
+    fun getFilesNames(): MutableList<String> {
         return try {
-            val content = inp.readText();
-            if (content.contains("$examSubject-$examDate.json")) {
-                "$examSubject-$examDate.json"
-            } else {
-                "$examSubject-$examDate wasn't send as a request"
+            val content = inp.readText()
+            val res = content.split("\n")
+            val fileList = mutableListOf<String>()
+            res.forEach { line ->
+                if (line != "") {
+                    fileList.add(line)
+                }
             }
+            fileList
         } catch (e: Exception) {
-            e.message.toString()
+            throw Exception(e.message.toString())
         }
     }
 
