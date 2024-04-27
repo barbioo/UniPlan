@@ -37,8 +37,5 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun mySummaries(view: View?) {
-        val intent = Intent(this, Summaries::class.java)
-        startActivity(intent)
-    }
+
 }
