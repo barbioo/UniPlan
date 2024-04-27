@@ -8,17 +8,10 @@ import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.TextField
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.builder.api.RequestBuilder
-import com.builder.api.RequestSender
-import com.builder.api.RequestsFileManager
 import com.example.uniplan.Plan
 import com.example.uniplan.R
-import com.example.uniplan.Summaries
-import kotlinx.serialization.json.JsonBuilder
-import java.util.Calendar
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,12 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     fun Plan(view: View?) {
         val intent = Intent(this, Plan::class.java)
-        startActivity(intent)
-    }
-
-    //rifaccio calendar, errore ed esce dall'app
-    fun Calendar(view: View?) {
-        val intent = Intent(this, Calendar::class.java)
         startActivity(intent)
     }
 

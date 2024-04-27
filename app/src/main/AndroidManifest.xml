@@ -19,6 +19,9 @@
         android:theme="@style/Theme.UniPlan"
         tools:targetApi="31">
         <activity
+            android:name=".AddSubjects"
+            android:exported="false" />
+        <activity
             android:name=".Plan"
             android:exported="false" />
         <activity
@@ -31,8 +34,8 @@
             android:name="com.main.uniplan.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.UniPlan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UniPlan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
