@@ -44,7 +44,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:onClick="plan"/>
 
     <Button
         android:id="@+id/button2"
@@ -57,7 +58,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:onClick="dashboard"/>
 
     <Button
         android:id="@+id/button3"
@@ -69,6 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:onClick="home"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
