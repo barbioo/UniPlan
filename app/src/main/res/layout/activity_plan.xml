@@ -35,36 +35,36 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="117dp"
-        android:layout_height="106dp"
+        android:layout_width="132dp"
+        android:layout_height="105dp"
+        android:onClick="plan"
         android:text="MY PLANS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints"
-        android:onClick="plan"/>
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="117dp"
-        android:layout_height="106dp"
+        android:layout_width="132dp"
+        android:layout_height="105dp"
+        android:onClick="dashboard"
         android:text="DASHBOARD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintHorizontal_bias="0.992"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints"
-        android:onClick="dashboard"/>
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="117dp"
-        android:layout_height="106dp"
+        android:layout_width="132dp"
+        android:layout_height="105dp"
         android:text="HOME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +72,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints"
-        android:onClick="home"/>
+        android:onClick="home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
