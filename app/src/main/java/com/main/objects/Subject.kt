@@ -1,26 +1,57 @@
 package com.objects
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.io.Serializable
+import java.time.LocalDate
 
 class Subject(
     private var subject: String,
-    private var examDate: String
+    private var examDate: String,
+    private var requestDate: String
 ) : Serializable {
 
     constructor() : this(
         "default",
+        "02-01-2000",
         "01-01-2000"
     )
 
     constructor(fileName: String): this() {
+        /*
         val regex = Regex("\\d+")
-        val match = regex.find(fileName)
+
+        val nFileName = fileName.replace(".json", "");
+        val match = regex.find(nFileName)
         match?.let {
             val index = it.range.first
             subject = fileName.substring(0, index).trim().replace("-", "")
-            examDate = fileName.substring(index).trim().replace(".json", "")
+            examDate = fileName.substring(index).trim()
         }
+        */
+        val tmp = fileName.replace(".json", "").split("-");
+        this.subject = tmp.first();
+        this.requestDate = "${tmp[1]}-${tmp[2]}-${tmp[3]}";
+        this.examDate = "${tmp[4]}-${tmp[5]}-${tmp[6]}";
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    constructor(subject: String, examDate: String): this() {
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun todayDate(): String {
+            return try {
+                val tmp = LocalDate.now()
+                "${tmp.dayOfMonth}-${tmp.month.value}-${tmp.year}"
+            } catch (e: Exception) {
+                e.message.toString()
+            }
+        }
+
+        this.subject = subject;
+        this.requestDate = todayDate();
+        this.examDate = examDate;
+    }
+
 
     fun setSubject(v: String) {
         subject = v
@@ -30,16 +61,24 @@ class Subject(
         examDate = v
     }
 
-    fun getSubject() {
-        subject
+    fun setRequestDate(v: String) {
+        requestDate = v;
     }
 
-    fun getExamDate() {
-        examDate
+    fun getSubject(): String {
+        return subject
+    }
+
+    fun getRequestDate(): String {
+        return requestDate;
+    }
+
+    fun getExamDate(): String {
+        return examDate
     }
 
     override fun toString(): String {
-        return "Subject(subject='$subject', examDate='$examDate')"
+        return "Subject(subject='$subject', requestDate='$requestDate', examDate='$examDate')"
     }
 
 }

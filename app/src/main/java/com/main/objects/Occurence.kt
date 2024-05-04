@@ -11,14 +11,18 @@ class Occurrence(
     private var subject: String,
     private var date: String,
     private var topic: String,
-    private var user: String
+    private var done: Boolean
 ) : Serializable {
 
-    constructor() : this("default", "1-1-2024", "default", "default")
+    constructor() : this("default", "1-1-2024", "default", false)
 
     fun getSubject(): String {
         // Restituisci il valore della proprietà 'subject'
         return subject
+    }
+
+    fun getDone(): Boolean {
+        return done
     }
 
     // Metodo getter per la proprietà 'date'
@@ -31,12 +35,6 @@ class Occurrence(
     fun getTopic(): String {
         // Restituisci il valore della proprietà 'topic'
         return topic
-    }
-
-    // Metodo getter per la proprietà 'user'
-    fun getUser(): String {
-        // Restituisci il valore della proprietà 'user'
-        return user
     }
 
     // Setter for subject
@@ -54,13 +52,12 @@ class Occurrence(
         this.topic = topic
     }
 
-    // Setter for user
-    fun setUser(user: String) {
-        this.user = user
+    fun setDone(done: Boolean) {
+        this.done = done
     }
 
     override fun toString(): String {
-        return "Occurrence(subject='$subject', date=$date, topic='$topic', user='$user')"
+        return "Occurrence(subject='$subject', date=$date, topic='$topic', done='$done')"
     }
 
 

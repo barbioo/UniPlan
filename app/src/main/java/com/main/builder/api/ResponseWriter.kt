@@ -1,7 +1,7 @@
-package com.builder.api
+package com.main.builder.api
 
 import android.content.Context
-import java.io.BufferedReader
+import com.objects.Subject
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -13,8 +13,8 @@ class ResponseWriter(
     ) {
 
     companion object {
-        private fun createWriter(applicationContext: Context, examSubject: String, examDate: String): BufferedWriter {
-            val f = File(applicationContext.getExternalFilesDir("data_responses"), "$examSubject-$examDate.json");
+        private fun createWriter(applicationContext: Context, examSubject: String, requestDate: String, examDate: String): BufferedWriter {
+            val f = File(applicationContext.getExternalFilesDir("data_responses"), "$examSubject-$requestDate-$examDate.json");
             return if (f.exists()) {
                 BufferedWriter(FileWriter(f))
             } else {
@@ -23,12 +23,17 @@ class ResponseWriter(
         }
     }
 
-    constructor(applicationContext: Context, examSubject: String, examDate: String) : this(
+    constructor(applicationContext: Context, examSubject: String, requestDate: String, examDate: String) : this(
         applicationContext,
-        createWriter(applicationContext, examSubject, examDate)
+        createWriter(applicationContext, examSubject, requestDate, examDate)
     )
 
-    fun printResponse(json: String): String {
+    constructor(applicationContext: Context, sub: Subject): this(
+        applicationContext,
+        createWriter(applicationContext, sub.getSubject(), sub.getRequestDate(), sub.getExamDate())
+    )
+
+    fun printJson(json: String): String {
         return try {
             out.write(json);
             out.flush();
@@ -37,5 +42,9 @@ class ResponseWriter(
         } catch (e: IOException) {
             e.message.toString()
         }
+    }
+
+    fun renewWriter(applicationContext: Context, sub: Subject) {
+        this.out = createWriter(applicationContext, sub.getSubject(), sub.getRequestDate(), sub.getExamDate());
     }
 }

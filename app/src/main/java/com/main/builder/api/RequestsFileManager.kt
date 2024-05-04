@@ -1,8 +1,7 @@
-package com.builder.api
+package com.main.builder.api
 
 import android.content.Context
-import android.util.MutableBoolean
-import okhttp3.internal.toImmutableList
+import com.objects.Subject
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -51,17 +50,32 @@ class RequestsFileManager(
         createWriter(applicationContext)
     )
 
-    fun addRequestToList(examSubject: String, examDate: String): String {
+    fun addRequestToList(examSubject: String, examDate: String, requestDate: String): String {
         return try {
             val content = inp.readText();
-            if (!content.contains("$examSubject-$examDate.json")) {
-                out.write("$examSubject-$examDate.json\n")
+            if (!content.contains("$examSubject-$requestDate-$examDate.json")) {
+                out.write("$examSubject-$requestDate-$examDate.json\n")
                 out.flush()
                 out.close()
             }
             "Success"
         } catch (e: Exception) {
             e.message.toString()
+        }
+    }
+
+    fun addRequestToList(sub: Subject): String {
+        val subS = "${sub.getSubject()}-${sub.getRequestDate()}-${sub.getExamDate()}.json"
+        return try {
+            val content = inp.readText();
+            if (!content.contains(subS)) {
+                out.write("$subS\n")
+                out.flush()
+                out.close()
+            }
+            "Success";
+        } catch (e: Exception) {
+            e.message.toString();
         }
     }
 
