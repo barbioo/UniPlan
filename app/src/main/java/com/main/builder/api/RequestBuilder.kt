@@ -1,9 +1,10 @@
-package com.builder.api
+package com.main.builder.api
 
 import android.content.Context
 import android.nfc.FormatException
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.objects.Subject
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -31,9 +32,17 @@ class RequestBuilder(
     @RequiresApi(Build.VERSION_CODES.O)
     constructor(applicationContext: Context, examSubject: String, examDate: String): this(
         applicationContext,
-        Json.encodeToString("I have an exam of ${examSubject.replace("-", " ")} in date $examDate, today is ${todayDate()} that contains those arguments:\n<EXAM_ARGUMENT_LIST>\nWrite me a detailed study schedule program that evenly distributes the study across the days I have. Write the response in JSON format, using the date with day and month as the key, and the corresponding topic for that date as the value."),
+        Json.encodeToString("I have an exam of ${examSubject.replace("-", " ")} in date $examDate, today is ${todayDate()} that contains those arguments:\n<EXAM_ARGUMENT_LIST>\nWrite me a detailed study schedule program that evenly distributes the study across the days I have. Write the response in JSON format, using the date with day and month as the key, and the corresponding topic for that date as the value. In addition to JSON, I don't want any other comments."),
         examDate,
         examSubject.replace("-", " ")
+    )
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    constructor(applicationContext: Context, subject: Subject): this(
+        applicationContext,
+        Json.encodeToString("I have an exam of ${subject.getSubject().replace("-", " ")} in date ${subject.getExamDate()}, today is ${subject.getRequestDate()} that contains those arguments:\n<EXAM_ARGUMENT_LIST>\nWrite me a detailed study schedule program that evenly distributes the study across the days I have. Write the response in JSON format, using the date with day and month as the key, and the corresponding topic for that date as the value."),
+        subject.getExamDate(),
+        subject.getSubject().replace("-", " ")
     )
 
 
@@ -54,9 +63,10 @@ class RequestBuilder(
         return userRequest.replace("<EXAM_ARGUMENT_LIST>", listToString(topics));
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun buildFile(): String {
         return try {
-            val root = File(applicationContext.getExternalFilesDir("data_responses"), "$examSubject-$examDate.json");
+            val root = File(applicationContext.getExternalFilesDir("data_responses"), "$examSubject-${todayDate()}-$examDate.json");
             if (root.exists()) {
                 "Exists"
             } else {
