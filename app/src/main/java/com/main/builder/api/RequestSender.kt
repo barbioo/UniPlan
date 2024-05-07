@@ -41,7 +41,7 @@ class RequestSender(
                 .url(url)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("model", "mistral-small-latest")
-                .addHeader("Authorization", "Bearer LjKG1bXM7ILjEK2iwdjyhFU4b6dOAjNy")
+                .addHeader("Authorization", "Bearer mD3JJeHqBGWmJF5YhCB2qNba7qwDEcxa")
                 .post(userRequest.toRequestBody(mediaType))
                 .build();
             val res = client.newCall(request).execute();
