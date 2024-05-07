@@ -14,6 +14,15 @@ import com.example.uniplan.AddSubjects
 import com.example.uniplan.Dashboard
 import com.example.uniplan.Plan
 import com.example.uniplan.R
+import com.main.builder.api.RequestsFileManager
+import com.main.builder.generic.JSONBuilder
+import com.objects.Subject
+import objects.Occurrence
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.IOException
+import java.time.LocalDate
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             v.layoutParams = params
             insets
         }
-
     }
 
     fun plan(view: View?) {
@@ -50,6 +58,36 @@ class MainActivity : AppCompatActivity() {
     fun addSubjects(view: View?) {
         val intent = Intent(this, AddSubjects::class.java)
         startActivity(intent)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun thereIsAOccurence(): MutableList<Occurrence> {
+        val res = mutableListOf<Occurrence>()
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun todayDate(): String {
+            return try {
+                val tmp = LocalDate.now()
+                "${tmp.dayOfMonth}-${tmp.month.value}-${tmp.year}"
+            } catch (e: Exception) {
+                e.message.toString()
+            }
+        }
+
+        val man = RequestsFileManager(applicationContext);
+        val requests = man.getFilesNames();
+        for (request in requests) {
+            val sub = Subject(request)
+            val occList = JSONBuilder(applicationContext, sub).buildOccurenceFromJson()
+            var found = false; var index = 0;
+            while(!found || index == occList.size) {
+                if (occList[index].getDate() == todayDate()) {
+                    res.add(occList[index])
+                    found = true;
+                }
+            }
+        }
+        return res;
     }
 
 }
