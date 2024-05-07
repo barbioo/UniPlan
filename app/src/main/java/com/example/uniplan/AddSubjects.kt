@@ -46,10 +46,7 @@ class AddSubjects : AppCompatActivity() {
         buttonSend.setOnClickListener {
             buttonSend.setOnClickListener {
                 val success = sendRequest()
-                setContentView(R.layout.request_success) // Imposta il layout prima di trovare il TextView
-
-                val textField = findViewById<TextView>(R.id.textView15)
-                textField.text = success
+                setContentView(R.layout.request_success)
             }
         }
     }
