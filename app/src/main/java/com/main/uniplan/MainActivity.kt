@@ -76,6 +76,10 @@ class MainActivity : AppCompatActivity() {
 
         val man = RequestsFileManager(applicationContext);
         val requests = man.getFilesNames();
+
+        if (requests.isEmpty()) {
+            return res;
+        }
         for (request in requests) {
             val sub = Subject(request)
             val occList = JSONBuilder(applicationContext, sub).buildOccurenceFromJson()

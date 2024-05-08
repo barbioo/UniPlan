@@ -19,6 +19,9 @@
         android:theme="@style/Theme.UniPlan"
         tools:targetApi="31">
         <activity
+            android:name=".Occurrence"
+            android:exported="false" />
+        <activity
             android:name=".NewSubject"
             android:exported="false" />
         <activity
