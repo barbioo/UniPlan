@@ -10,19 +10,9 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.main.builder.api.NRequestsManager
 import com.main.builder.api.RequestBuilder
 import com.main.builder.api.RequestSender
 import com.main.builder.api.RequestsFileManager
@@ -30,8 +20,10 @@ import com.main.builder.api.ResponseWriter
 import com.main.builder.generic.JSONBuilder
 import com.main.uniplan.MainActivity
 import com.objects.Subject
+import kotlinx.coroutines.InternalCoroutinesApi
 
 class AddSubjects : AppCompatActivity() {
+    @OptIn(InternalCoroutinesApi::class)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +36,24 @@ class AddSubjects : AppCompatActivity() {
         }
         val buttonSend = findViewById<Button>(R.id.button4)
         buttonSend.setOnClickListener {
-            buttonSend.setOnClickListener {
-                val success = sendRequest()
+            val sub = buildSubject()
+            val occ = buildOccList()
+
+            setContentView(R.layout.loading);
+            try {
+                val t = Thread {
+                    sendRequest(sub, occ);
+
+                    runOnUiThread {
+                        NRequestsManager(applicationContext).addOne()
+                        setContentView(R.layout.request_success);
+                    }
+                }
+                t.start();
+            } catch (e: Exception) {
                 setContentView(R.layout.request_success)
+                val textView = findViewById<TextView>(R.id.textView15)
+                textView.text = "Something went wrong with your request, please check your setup and retry"
             }
         }
     }
@@ -68,18 +75,34 @@ class AddSubjects : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sendRequest(): String {
+    private fun buildSubject(): Subject {
         return try {
-        var subject = ""; var date = ""; var occurences = "";
-        val editText1 = findViewById<EditText>(R.id.editText)
-        val editText2 = findViewById<EditText>(R.id.editText2)
+            var subject = ""; var date = "";
+            val editText1 = findViewById<EditText>(R.id.editText)
+            val editText2 = findViewById<EditText>(R.id.editText2)
+
+            subject = editText1.text.toString();
+            date = editText2.text.toString();
+
+            Subject(subject, date);
+
+        } catch (e: Exception) {
+            Subject(e.message.toString(), "");
+        }
+
+    }
+
+    private fun buildOccList(): MutableList<String> {
         val editText3 = findViewById<EditText>(R.id.editText3)
+        val occurrences = editText3.text.toString()
+        val tmp = occurrences.split(";");
+        return tmp.toMutableList();
+    }
 
-        subject = editText1.text.toString();
-        date = editText2.text.toString();
-        occurences = editText3.text.toString();
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sendRequest(sub: Subject, occ: MutableList<String>): String {
+        return try {
 
-        val sub = Subject(subject, date);
         val rBuilder = RequestBuilder(applicationContext, sub);
 
         val s = Thread {
@@ -87,13 +110,7 @@ class AddSubjects : AppCompatActivity() {
         }
         s.start();
 
-        fun getList(s: String): MutableList<String> {
-            val tmp = s.split(";");
-            return tmp.toMutableList();
-        }
-
-        val list = getList(occurences);
-        val request = rBuilder.build(list);
+        val request = rBuilder.build(occ);
 
         val sender = RequestSender();
         sender.setUserRequest(request);

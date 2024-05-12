@@ -22,7 +22,7 @@
             android:name=".Occurrence"
             android:exported="false" />
         <activity
-            android:name=".NewSubject"
+            android:name=".LoadingClass"
             android:exported="false" />
         <activity
             android:name=".Dashboard"
@@ -32,12 +32,6 @@
             android:exported="false" />
         <activity
             android:name=".Plan"
-            android:exported="false" />
-        <activity
-            android:name=".Summaries"
-            android:exported="false" />
-        <activity
-            android:name=".calendar"
             android:exported="false" />
         <activity
             android:name="com.main.uniplan.MainActivity"
