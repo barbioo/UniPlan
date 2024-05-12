@@ -22,9 +22,6 @@
             android:name=".Occurrence"
             android:exported="false" />
         <activity
-            android:name=".LoadingClass"
-            android:exported="false" />
-        <activity
             android:name=".Dashboard"
             android:exported="false" />
         <activity

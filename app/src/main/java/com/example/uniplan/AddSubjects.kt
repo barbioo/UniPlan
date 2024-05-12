@@ -12,12 +12,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.NRequestsManager
 import com.main.builder.api.RequestBuilder
 import com.main.builder.api.RequestSender
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.api.ResponseWriter
 import com.main.builder.generic.JSONBuilder
+import com.main.builder.generic.RequestFormHelper
 import com.main.uniplan.MainActivity
 import com.objects.Subject
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -37,12 +39,18 @@ class AddSubjects : AppCompatActivity() {
         val buttonSend = findViewById<Button>(R.id.button4)
         buttonSend.setOnClickListener {
             val sub = buildSubject()
+            val date = buildDate();
+            if (date == "Unsuccessful") {
+                Snackbar.make(findViewById(android.R.id.content), "Bad date format", Snackbar.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            val subject = Subject(sub, date)
             val occ = buildOccList()
 
             setContentView(R.layout.loading);
             try {
                 val t = Thread {
-                    sendRequest(sub, occ);
+                    sendRequest(subject, occ);
 
                     runOnUiThread {
                         NRequestsManager(applicationContext).addOne()
@@ -75,21 +83,29 @@ class AddSubjects : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun buildSubject(): Subject {
+    private fun buildSubject(): String {
         return try {
-            var subject = ""; var date = "";
+            val help = RequestFormHelper();
+            var subject = "";
             val editText1 = findViewById<EditText>(R.id.editText)
-            val editText2 = findViewById<EditText>(R.id.editText2)
-
-            subject = editText1.text.toString();
-            date = editText2.text.toString();
-
-            Subject(subject, date);
-
+            subject = help.subjectControl(editText1.text.toString());
+            subject;
         } catch (e: Exception) {
-            Subject(e.message.toString(), "");
+            e.message.toString()
         }
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun buildDate(): String {
+        val help = RequestFormHelper();
+        val editText2 = findViewById<EditText>(R.id.editText2);
+        val date = editText2.text.toString()
+        return if (!help.dateControl(date)) {
+            "Unsuccessful"
+        } else {
+            date
+        }
     }
 
     private fun buildOccList(): MutableList<String> {
