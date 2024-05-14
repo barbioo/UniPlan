@@ -1,0 +1,151 @@
+Index: app/src/main/res/layout/activity_add_subjects.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".AddSubjects\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView3\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"UniPlan\"\r\n        android:textSize=\"30dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.055\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.037\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView5\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"ADD SUBJECTS\"\r\n        android:textSize=\"24dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/button2\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.065\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.108\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button1\"\r\n        android:layout_width=\"132dp\"\r\n        android:layout_height=\"105dp\"\r\n        android:onClick=\"plan\"\r\n        android:text=\"MY PLANS\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.01\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"1.0\"\r\n        tools:ignore=\"MissingConstraints\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button2\"\r\n        android:layout_width=\"132dp\"\r\n        android:layout_height=\"105dp\"\r\n        android:onClick=\"dashboard\"\r\n        android:text=\"DASHBOARD\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.992\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"1.0\"\r\n        tools:ignore=\"MissingConstraints\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button3\"\r\n        android:layout_width=\"132dp\"\r\n        android:layout_height=\"105dp\"\r\n        android:text=\"HOME\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"1.0\"\r\n        tools:ignore=\"MissingConstraints\"\r\n        android:onClick=\"home\" />\r\n\r\n\r\n    <EditText\r\n        android:id=\"@+id/editText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"Scrivi qui...\"\r\n        android:inputType=\"textMultiLine\"\r\n        android:maxLines=\"5\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/button3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.208\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editText2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"Scrivi qui...\"\r\n        android:inputType=\"textMultiLine\"\r\n        android:maxLines=\"5\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/button3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.367\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editText3\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"Scrivi qui...\"\r\n        android:inputType=\"textMultiLine\"\r\n        android:maxLines=\"5\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/button3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.521\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView12\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"INSERT THE SUBJECT:\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.063\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.16\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView13\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"INSERT THE EXAM DATE (gg-MM-yyyy)\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.101\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.306\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView14\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"INSERT THE LIST OF TOPICS SEPARATED BY ;\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.136\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.452\" />\r\n\r\n    <!-- SampleComments-->\r\n    <Button\r\n        android:id=\"@+id/button4\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Send\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/button3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/editText3\"\r\n        app:layout_constraintVertical_bias=\"0.514\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_add_subjects.xml b/app/src/main/res/layout/activity_add_subjects.xml
+--- a/app/src/main/res/layout/activity_add_subjects.xml	(revision 05b8d13790dfadb5b03273c5aeab96640f72cc27)
++++ b/app/src/main/res/layout/activity_add_subjects.xml	(date 1715511657239)
+@@ -81,7 +81,8 @@
+         android:layout_height="wrap_content"
+         android:hint="Scrivi qui..."
+         android:inputType="textMultiLine"
+-        android:maxLines="5"
++        android:maxLines="3"
++        android:maxLength="120"
+         app:layout_constraintBottom_toBottomOf="@+id/button3"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="1.0"
+@@ -89,19 +90,19 @@
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.208" />
+ 
++
+     <EditText
+-        android:id="@+id/editText2"
++        android:id="@+id/dateEditText"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:hint="Scrivi qui..."
+-        android:inputType="textMultiLine"
+-        android:maxLines="5"
++        android:hint="Insert the exam date (gg/mm/yyyy)"
++        android:inputType="text"
+         app:layout_constraintBottom_toBottomOf="@+id/button3"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.367" />
++        app:layout_constraintVertical_bias="0.358" />
+ 
+     <EditText
+         android:id="@+id/editText3"
+@@ -110,6 +111,7 @@
+         android:hint="Scrivi qui..."
+         android:inputType="textMultiLine"
+         android:maxLines="5"
++        android:maxLength="300"
+         app:layout_constraintBottom_toBottomOf="@+id/button3"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="1.0"
+@@ -133,7 +135,7 @@
+         android:id="@+id/textView13"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="INSERT THE EXAM DATE (gg-MM-yyyy)"
++        android:text="INSERT THE EXAM DATE (gg-mm-yyyy)"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.101"
+@@ -158,12 +160,12 @@
+         android:id="@+id/button4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="Send"
++        android:text="SEND"
+         app:layout_constraintBottom_toTopOf="@+id/button3"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.498"
++        app:layout_constraintHorizontal_bias="0.495"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/editText3"
+-        app:layout_constraintVertical_bias="0.514" />
++        app:layout_constraintVertical_bias="0.622" />
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/uniplan/AddSubjects.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.uniplan\r\n\r\nimport android.content.Intent\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.TextView\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.compose.foundation.layout.Box\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.material3.Surface\r\nimport androidx.compose.material3.Text\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.ui.Alignment\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.graphics.Color\r\nimport androidx.compose.ui.text.font.FontWeight\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.core.view.ViewCompat\r\nimport androidx.core.view.WindowInsetsCompat\r\nimport com.main.builder.api.RequestBuilder\r\nimport com.main.builder.api.RequestSender\r\nimport com.main.builder.api.RequestsFileManager\r\nimport com.main.builder.api.ResponseWriter\r\nimport com.main.builder.generic.JSONBuilder\r\nimport com.main.uniplan.MainActivity\r\nimport com.objects.Subject\r\n\r\nclass AddSubjects : AppCompatActivity() {\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n        setContentView(R.layout.activity_add_subjects)\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->\r\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\r\n            insets\r\n        }\r\n        val buttonSend = findViewById<Button>(R.id.button4)\r\n        buttonSend.setOnClickListener {\r\n            buttonSend.setOnClickListener {\r\n                val success = sendRequest()\r\n                setContentView(R.layout.request_success)\r\n            }\r\n        }\r\n    }\r\n\r\n    fun plan(view: View?) {\r\n        val intent = Intent(this, Plan::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    fun dashboard(view: View?) {\r\n        val intent = Intent(this, Dashboard::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    fun home(view: View?) {\r\n        val intent = Intent(this, MainActivity::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    fun sendRequest(): String {\r\n        return try {\r\n        var subject = \"\"; var date = \"\"; var occurences = \"\";\r\n        val editText1 = findViewById<EditText>(R.id.editText)\r\n        val editText2 = findViewById<EditText>(R.id.editText2)\r\n        val editText3 = findViewById<EditText>(R.id.editText3)\r\n\r\n        subject = editText1.text.toString();\r\n        date = editText2.text.toString();\r\n        occurences = editText3.text.toString();\r\n\r\n        val sub = Subject(subject, date);\r\n        val rBuilder = RequestBuilder(applicationContext, sub);\r\n\r\n        val s = Thread {\r\n            rBuilder.buildFile();\r\n        }\r\n        s.start();\r\n\r\n        fun getList(s: String): MutableList<String> {\r\n            val tmp = s.split(\";\");\r\n            return tmp.toMutableList();\r\n        }\r\n\r\n        val list = getList(occurences);\r\n        val request = rBuilder.build(list);\r\n\r\n        val sender = RequestSender();\r\n        sender.setUserRequest(request);\r\n\r\n        var respond = \"\";\r\n        val t = Thread {\r\n            respond = sender.sendStandardCall();\r\n        }\r\n        t.start(); t.join();\r\n        val out = ResponseWriter(applicationContext, sub);\r\n        out.printJson(respond);\r\n\r\n        RequestsFileManager(applicationContext).addRequestToList(sub);\r\n\r\n        val j = JSONBuilder(applicationContext, sub);\r\n        val occList = j.buildOccurrenceFromResponse(sub.getSubject())\r\n        val jsonList = j.buildJsonOfOccurences(occList);\r\n        out.renewWriter(applicationContext, sub);\r\n        out.printJson(jsonList);\r\n            \"true\"\r\n        } catch (e: Exception) {\r\n            e.message.toString()\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/uniplan/AddSubjects.kt b/app/src/main/java/com/example/uniplan/AddSubjects.kt
+--- a/app/src/main/java/com/example/uniplan/AddSubjects.kt	(revision 05b8d13790dfadb5b03273c5aeab96640f72cc27)
++++ b/app/src/main/java/com/example/uniplan/AddSubjects.kt	(date 1715512618468)
+@@ -3,6 +3,8 @@
+ import android.content.Intent
+ import android.os.Build
+ import android.os.Bundle
++import android.text.Editable
++import android.text.TextWatcher
+ import android.view.View
+ import android.widget.Button
+ import android.widget.EditText
+@@ -72,7 +74,7 @@
+         return try {
+         var subject = ""; var date = ""; var occurences = "";
+         val editText1 = findViewById<EditText>(R.id.editText)
+-        val editText2 = findViewById<EditText>(R.id.editText2)
++        val editText2 = findViewById<EditText>(R.id.dateEditText)
+         val editText3 = findViewById<EditText>(R.id.editText3)
+ 
+         subject = editText1.text.toString();
+@@ -120,4 +122,41 @@
+     }
+ 
+ 
++
++    
++    fun setupEditText(editText: EditText) {
++        editText.addTextChangedListener(object : TextWatcher {
++            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
++
++            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
++
++            override fun afterTextChanged(s: Editable?) {
++                val input = s.toString()
++                if (!isValidDate(input)) {
++                    editText.error = "Data non valida. Inserisci una data nel formato gg/mm/yyyy."
++                } else {
++                    editText.error = null
++                }
++            }
++
++            private fun isValidDate(dateStr: String): Boolean {
++                val regex = """^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/\d{4}$""".toRegex()
++                if (!dateStr.matches(regex)) return false
++
++                val parts = dateStr.split("/")
++                val day = parts[0].toInt()
++                val month = parts[1].toInt()
++                val year = parts[2].toInt()
++
++                // Controlla se la data è valida secondo i vincoli del calendario
++                val maxDaysInMonth = when (month) {
++                    4, 6, 9, 11 -> 30
++                    2 -> if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) 29 else 28
++                    else -> 31
++                }
++                return day in 1..maxDaysInMonth
++            }
++        })
++    }
++
+ }
+\ No newline at end of file
