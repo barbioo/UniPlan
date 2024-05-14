@@ -2,8 +2,10 @@ package com.example.uniplan
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import android.graphics.Color;
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +36,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.main.builder.api.RequestsFileManager
 import com.main.uniplan.MainActivity
 import com.objects.Subject
+
 
 class Plan : AppCompatActivity() {
 
@@ -60,7 +63,7 @@ class Plan : AppCompatActivity() {
                     insets
                 }
             }
-            addButtons(list);
+            addButtons(applicationContext, list);
         }
     }
 
@@ -88,11 +91,13 @@ class Plan : AppCompatActivity() {
         return res;
     }
 
-    fun addButtons(list: MutableList<Subject>) {
+    fun addButtons(context: Context, list: MutableList<Subject>) {
+        val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored
         for (sub in list.drop(1)) {
             val layout = findViewById<LinearLayout>(R.id.rootLayout);
-            val newBtn = Button(this)
+            val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
             newBtn.text = "${sub.getSubject()}\n\n${sub.getExamDate()}                                                       ${sub.getRequestDate()}"
+            newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
                 setContentView(R.layout.activity_main)
                 ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
