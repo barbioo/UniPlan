@@ -10,28 +10,22 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
+import com.main.builder.api.NRequestsManager
 import com.main.builder.api.RequestBuilder
 import com.main.builder.api.RequestSender
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.api.ResponseWriter
 import com.main.builder.generic.JSONBuilder
+import com.main.builder.generic.RequestFormHelper
 import com.main.uniplan.MainActivity
 import com.objects.Subject
+import kotlinx.coroutines.InternalCoroutinesApi
 
 class AddSubjects : AppCompatActivity() {
+    @OptIn(InternalCoroutinesApi::class)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +38,30 @@ class AddSubjects : AppCompatActivity() {
         }
         val buttonSend = findViewById<Button>(R.id.button4)
         buttonSend.setOnClickListener {
-            buttonSend.setOnClickListener {
-                val success = sendRequest()
+            val sub = buildSubject()
+            val date = buildDate();
+            if (date == "Unsuccessful") {
+                Snackbar.make(findViewById(android.R.id.content), "Bad date format", Snackbar.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            val subject = Subject(sub, date)
+            val occ = buildOccList()
+
+            setContentView(R.layout.loading);
+            try {
+                val t = Thread {
+                    sendRequest(subject, occ);
+
+                    runOnUiThread {
+                        NRequestsManager(applicationContext).addOne()
+                        setContentView(R.layout.request_success);
+                    }
+                }
+                t.start();
+            } catch (e: Exception) {
                 setContentView(R.layout.request_success)
+                val textView = findViewById<TextView>(R.id.textView15)
+                textView.text = "Something went wrong with your request, please check your setup and retry"
             }
         }
     }
@@ -68,18 +83,42 @@ class AddSubjects : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sendRequest(): String {
+    private fun buildSubject(): String {
         return try {
-        var subject = ""; var date = ""; var occurences = "";
-        val editText1 = findViewById<EditText>(R.id.editText)
-        val editText2 = findViewById<EditText>(R.id.editText2)
+            val help = RequestFormHelper();
+            var subject = "";
+            val editText1 = findViewById<EditText>(R.id.editText)
+            subject = help.subjectControl(editText1.text.toString());
+            subject;
+        } catch (e: Exception) {
+            e.message.toString()
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun buildDate(): String {
+        val help = RequestFormHelper();
+        val editText2 = findViewById<EditText>(R.id.editText2);
+        val date = editText2.text.toString()
+        return if (!help.dateControl(date)) {
+            "Unsuccessful"
+        } else {
+            date
+        }
+    }
+
+    private fun buildOccList(): MutableList<String> {
         val editText3 = findViewById<EditText>(R.id.editText3)
+        val occurrences = editText3.text.toString()
+        val tmp = occurrences.split(";");
+        return tmp.toMutableList();
+    }
 
-        subject = editText1.text.toString();
-        date = editText2.text.toString();
-        occurences = editText3.text.toString();
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sendRequest(sub: Subject, occ: MutableList<String>): String {
+        return try {
 
-        val sub = Subject(subject, date);
         val rBuilder = RequestBuilder(applicationContext, sub);
 
         val s = Thread {
@@ -87,13 +126,7 @@ class AddSubjects : AppCompatActivity() {
         }
         s.start();
 
-        fun getList(s: String): MutableList<String> {
-            val tmp = s.split(";");
-            return tmp.toMutableList();
-        }
-
-        val list = getList(occurences);
-        val request = rBuilder.build(list);
+        val request = rBuilder.build(occ);
 
         val sender = RequestSender();
         sender.setUserRequest(request);

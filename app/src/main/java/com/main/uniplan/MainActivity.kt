@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,13 +15,17 @@ import com.example.uniplan.AddSubjects
 import com.example.uniplan.Dashboard
 import com.example.uniplan.Plan
 import com.example.uniplan.R
+import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.generic.JSONBuilder
 import com.objects.Subject
 import objects.Occurrence
+import java.io.BufferedOutputStream
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.File
 import java.io.FileReader
+import java.io.FileWriter
 import java.io.IOException
 import java.time.LocalDate
 
@@ -38,6 +43,20 @@ class MainActivity : AppCompatActivity() {
             v.layoutParams = params
             insets
         }
+        val t = Thread {
+            val list = applicationContext.getExternalFilesDir("data_respond")?.listFiles();
+            list?.forEach { file ->
+                file.delete()
+            }
+            var out = BufferedWriter(FileWriter(File(applicationContext.getExternalFilesDir("user_requests"), "user_requests.txt")));
+            out.write("");
+            out.flush();
+            out.close();
+            Snackbar.make(findViewById(android.R.id.content), "Thread completed", Snackbar.LENGTH_LONG).show()
+        }
+        t.start(); t.join();
+
+
     }
 
     fun plan(view: View?) {

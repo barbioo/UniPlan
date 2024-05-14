@@ -2,6 +2,8 @@ package com.objects
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.Serializable
 import java.time.LocalDate
 
@@ -10,6 +12,21 @@ class Subject(
     private var examDate: String,
     private var requestDate: String
 ) : Serializable {
+
+    companion object {
+        fun deserialize(json: String): Subject {
+            return try {
+                val res = Subject();
+                val tmp = JSONObject(json);
+                res.subject = tmp.getString("subject");
+                res.examDate = tmp.getString("examDate");
+                res.requestDate = tmp.getString("requestDate");
+                res;
+            } catch (_: JSONException) {
+                throw Exception("Bad serialization of ${json}")
+            }
+        }
+    }
 
     constructor() : this(
         "default",
@@ -80,5 +97,18 @@ class Subject(
     override fun toString(): String {
         return "Subject(subject='$subject', requestDate='$requestDate', examDate='$examDate')"
     }
+
+    fun serialize(): String {
+        return try {
+            val res = JSONObject();
+            res.put("subject", this.subject);
+            res.put("requestDate", this.requestDate);
+            res.put("examDate", this.examDate);
+            res.toString();
+        } catch (_: JSONException) {
+            throw Exception("Bad serialization of ${this}")
+        }
+    }
+
 
 }
