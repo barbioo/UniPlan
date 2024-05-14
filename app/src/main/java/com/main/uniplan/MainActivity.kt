@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             v.layoutParams = params
             insets
         }
-        val t = Thread {
+        /*val t = Thread {
             val list = applicationContext.getExternalFilesDir("data_respond")?.listFiles();
             list?.forEach { file ->
                 file.delete()
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             out.close();
             Snackbar.make(findViewById(android.R.id.content), "Thread completed", Snackbar.LENGTH_LONG).show()
         }
-        t.start(); t.join();
+        t.start(); t.join();*/
 
 
     }
