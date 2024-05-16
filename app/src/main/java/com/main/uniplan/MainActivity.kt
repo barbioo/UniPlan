@@ -1,6 +1,9 @@
 package com.main.uniplan
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -27,6 +30,8 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
 import java.time.LocalDate
 
 
@@ -42,6 +47,10 @@ class MainActivity : AppCompatActivity() {
             params.topMargin = systemBars.top
             v.layoutParams = params
             insets
+        }
+        if (!verifyInternetConnection(applicationContext)) {
+            Snackbar.make(findViewById(android.R.id.content), "No internet connection" +
+                    "\nSome feature maybe will not work", Snackbar.LENGTH_LONG).show()
         }
         /*val t = Thread {
             val list = applicationContext.getExternalFilesDir("data_respond")?.listFiles();
@@ -77,6 +86,22 @@ class MainActivity : AppCompatActivity() {
     fun addSubjects(view: View?) {
         val intent = Intent(this, AddSubjects::class.java)
         startActivity(intent)
+    }
+
+    private fun verifyInternetConnection(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+            return networkCapabilities != null &&
+                    (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
