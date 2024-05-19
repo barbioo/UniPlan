@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Plan">
 
-
     <View
         android:id="@+id/whiteBox"
         android:layout_width="wrap_content"
@@ -18,23 +17,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <LinearLayout
-        android:id="@+id/rootLayout"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="-172dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button7"
+        <LinearLayout
+            android:id="@+id/rootLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:text="Subject\n\nexamDate                                                            requestDate" />
-    </LinearLayout>
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="-172dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="Subject\n\nexamDate                                                            requestDate" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/textView6"
