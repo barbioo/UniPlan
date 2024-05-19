@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +24,8 @@ import com.main.builder.api.RequestsFileManager
 import com.main.builder.generic.JSONBuilder
 import com.objects.Subject
 import objects.Occurrence
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.BufferedWriter
@@ -33,6 +36,7 @@ import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,10 +52,13 @@ class MainActivity : AppCompatActivity() {
             v.layoutParams = params
             insets
         }
-        if (!verifyInternetConnection(applicationContext)) {
-            Snackbar.make(findViewById(android.R.id.content), "No internet connection" +
-                    "\nSome feature maybe will not work", Snackbar.LENGTH_LONG).show()
+
+        val t = Thread {
+            if (!isOnline()) {
+                Snackbar.make(findViewById(android.R.id.content), "No internet connection\nSome features will not be viable", Snackbar.LENGTH_LONG).show()
+            }
         }
+        t.start();
         /*val t = Thread {
             val list = applicationContext.getExternalFilesDir("data_respond")?.listFiles();
             list?.forEach { file ->
@@ -64,8 +71,6 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(findViewById(android.R.id.content), "Thread completed", Snackbar.LENGTH_LONG).show()
         }
         t.start(); t.join();*/
-
-
     }
 
     fun plan(view: View?) {
@@ -88,20 +93,17 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun verifyInternetConnection(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val networkCapabilities = connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
-            }
-        } else {
-            val networkInfo = connectivityManager.activeNetworkInfo
-            return networkInfo != null && networkInfo.isConnectedOrConnecting
+    private fun isOnline(): Boolean {
+        val client = OkHttpClient();
+        val request = Request.Builder()
+            .url("https://jsonplaceholder.typicode.com/posts")
+            .get()
+            .build();
+        return try {
+            client.newCall(request).execute().toString()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
