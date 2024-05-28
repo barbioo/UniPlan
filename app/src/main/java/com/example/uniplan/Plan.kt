@@ -93,20 +93,19 @@ class Plan : AppCompatActivity() {
 
     fun addButtons(context: Context, list: MutableList<Subject>) {
         val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored
+        var iterator = 0;
         for (sub in list.drop(1)) {
             val layout = findViewById<LinearLayout>(R.id.rootLayout);
             val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
             newBtn.text = "${sub.getSubject()}\n\n${sub.getExamDate()}                                                       ${sub.getRequestDate()}"
             newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
-                setContentView(R.layout.activity_main)
-                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-                    insets
-                }
+                /* val intent = Intent(context, Occurrence::class.java)
+                Occurence(list[iterator]);
+                startActivity(intent)*/
             }
             layout.addView(newBtn)
+            iterator++;
         }
     }
 
