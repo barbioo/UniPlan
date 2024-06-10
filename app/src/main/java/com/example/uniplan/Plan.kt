@@ -54,7 +54,7 @@ class Plan : AppCompatActivity() {
                 insets
             }
             val first = findViewById<Button>(R.id.button7);
-            first.text = "${list[0].getSubject()}\n\n${list[0].getExamDate()}                                                       ${list[0].getRequestDate()}"
+            first.text = "${list[0].getSubject()}\n\n${list[0].getRequestDate()}                                                       ${list[0].getExamDate()}"
             first.setOnClickListener {
                 setContentView(R.layout.activity_main)
                 ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -97,7 +97,7 @@ class Plan : AppCompatActivity() {
         for (sub in list.drop(1)) {
             val layout = findViewById<LinearLayout>(R.id.rootLayout);
             val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
-            newBtn.text = "${sub.getSubject()}\n\n${sub.getExamDate()}                                                       ${sub.getRequestDate()}"
+            newBtn.text = "${sub.getSubject()}\n\n${sub.getRequestDate()}                                                       ${sub.getExamDate()}"
             newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
                 /* val intent = Intent(context, Occurrence::class.java)

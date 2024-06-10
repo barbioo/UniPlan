@@ -12,12 +12,12 @@ class RequestSender(
 ) {
     constructor(url: String) : this(
         URL(url),
-        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1080,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        "{\"model\":\"mistral-large-latest\",\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"Try\"}],\"temperature\":0.7,\"top_p\":1,\"max_tokens\":1080,\"stream\":false,\"safe_prompt\":false,\"random_seed\":1337}"
     )
 
     constructor() : this(
         URL("https://api.mistral.ai/v1/chat/completions"),
-        "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": Try\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1080,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        "{\"model\":\"mistral-large-latest\",\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"Try\"}],\"temperature\":0.7,\"top_p\":1,\"max_tokens\":1080,\"stream\":false,\"safe_prompt\":false,\"random_seed\":1337}"
     )
 
     fun setUserRequest(userRequest: String): String {
@@ -26,7 +26,7 @@ class RequestSender(
     }
 
     fun renewUserRequest() {
-        this.userRequest = "{\n  \"model\": \"open-mistral-7b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Try\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"max_tokens\": 1,\n  \"stream\": false,\n  \"safe_prompt\": false,\n  \"random_seed\": 1337\n}"
+        this.userRequest = "{\"model\":\"mistral-large-latest\",\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"Try\"}],\"temperature\":0.7,\"top_p\":1,\"max_tokens\":1080,\"stream\":false,\"safe_prompt\":false,\"random_seed\":1337}"
     }
 
     fun getCallString(): String {

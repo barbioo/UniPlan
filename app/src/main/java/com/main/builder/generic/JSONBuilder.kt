@@ -83,10 +83,13 @@ class JSONBuilder(
             }
         }
 
-        fun getRespondContent(): String {
+        fun getRespondContent(json: String): String {
             return try {
-                val respond = JSONObject(json);
-                val content = respond.getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content");
+                val respond = JSONObject(json)
+                val content = respond.getJSONArray("choices")
+                    .getJSONObject(0)
+                    .getJSONObject("message")
+                    .getString("content")
                 content
             } catch (e: Exception) {
                 e.message.toString()
@@ -95,7 +98,7 @@ class JSONBuilder(
 
         fun getTopicAtDate(date: String): String {
             return try {
-                val jsonObject = JSONObject(getRespondContent());
+                val jsonObject = JSONObject(getRespondContent(json));
                 val topic = jsonObject.getString(date);
                 topic;
             } catch (e: Exception) {
@@ -103,7 +106,7 @@ class JSONBuilder(
             }
         }
 
-        val dates = getTopicDates(getRespondContent());
+        val dates = getTopicDates(getRespondContent(json));
 
         for (date in dates) {
             val tmp = Occurrence();
@@ -142,13 +145,13 @@ class JSONBuilder(
         }
     }
 
-    fun buildOccurenceFromJson(): MutableList<Occurrence> {
+    fun buildOccurrenceFromJson(): MutableList<Occurrence> {
         val res = mutableListOf<Occurrence>();
-
         val list = try {
             JSONArray(json)
-        } catch (_: JSONException) {
-            throw Exception("Error in building occurence list")
+        } catch (e: JSONException) {
+            res.add(Occurrence(e.message.toString(), "22-3-2024", "22-4-2024", true))
+            return res;
         }
 
         for(i in 0 until list.length()) {

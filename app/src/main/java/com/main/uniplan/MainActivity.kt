@@ -1,17 +1,12 @@
 package com.main.uniplan
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,17 +21,10 @@ import com.objects.Subject
 import objects.Occurrence
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.io.BufferedOutputStream
-import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
-import java.io.FileReader
 import java.io.FileWriter
-import java.io.IOException
-import java.net.InetSocketAddress
-import java.net.Socket
 import java.time.LocalDate
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,13 +41,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val t = Thread {
+        /*val t = Thread {
             if (!isOnline()) {
                 Snackbar.make(findViewById(android.R.id.content), "No internet connection\nSome features will not be viable", Snackbar.LENGTH_LONG).show()
             }
         }
-        t.start();
-        /*val t = Thread {
+        t.start();*/
+        /*val to = Thread {
             val list = applicationContext.getExternalFilesDir("data_respond")?.listFiles();
             list?.forEach { file ->
                 file.delete()
@@ -70,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             out.close();
             Snackbar.make(findViewById(android.R.id.content), "Thread completed", Snackbar.LENGTH_LONG).show()
         }
-        t.start(); t.join();*/
+        to.start(); to.join();*/
     }
 
     fun plan(view: View?) {
@@ -129,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
         for (request in requests) {
             val sub = Subject(request)
-            val occList = JSONBuilder(applicationContext, sub).buildOccurenceFromJson()
+            val occList = JSONBuilder(applicationContext, sub).buildOccurrenceFromJson()
             var found = false; var index = 0;
             while(!found || index == occList.size) {
                 if (occList[index].getDate() == todayDate()) {

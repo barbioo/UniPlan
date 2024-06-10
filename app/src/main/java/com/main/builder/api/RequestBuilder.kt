@@ -32,7 +32,7 @@ class RequestBuilder(
     @RequiresApi(Build.VERSION_CODES.O)
     constructor(applicationContext: Context, examSubject: String, examDate: String): this(
         applicationContext,
-        Json.encodeToString("I have an exam of ${examSubject.replace("-", " ")} in date $examDate, today is ${todayDate()} that contains those arguments:\n<EXAM_ARGUMENT_LIST>\nWrite me a detailed study schedule program that evenly distributes the study across the days I have. Write the response in JSON format, using the date with day and month as the key, and the corresponding topic for that date as the value. In addition to JSON, I don't want any other comments."),
+        Json.encodeToString("I have an exam of ${examSubject.replace("-", " ")} in date $examDate, today is ${todayDate()} that contains those arguments:\n<EXAM_ARGUMENT_LIST>\nWrite me a detailed study schedule program that evenly distributes the study across the days I have. Write the response in short JSON format, using the date with day and month as the key, and the corresponding topic for that date as the value."),
         examDate,
         examSubject.replace("-", " ")
     )
