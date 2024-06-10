@@ -128,7 +128,7 @@ class JSONBuilder(
         return res;
     }
 
-    fun buildJsonOfOccurences(list: MutableList<Occurrence>): String {
+    fun buildJsonOfOccurrences(list: MutableList<Occurrence>): String {
         return try {
             val res = JSONArray();
             list.forEach {occ ->

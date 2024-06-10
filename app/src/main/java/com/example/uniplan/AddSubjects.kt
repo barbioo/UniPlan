@@ -151,7 +151,7 @@ class AddSubjects : AppCompatActivity() {
 
         val j = JSONBuilder(applicationContext, sub);
         val occList = j.buildOccurrenceFromResponse(sub.getSubject())
-        val jsonList = j.buildJsonOfOccurences(occList);
+        val jsonList = j.buildJsonOfOccurrences(occList);
         out.renewWriter(applicationContext, sub);
         out.printJson(jsonList);
             "true"
