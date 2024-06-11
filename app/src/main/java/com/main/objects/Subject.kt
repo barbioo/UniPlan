@@ -10,7 +10,8 @@ import java.time.LocalDate
 class Subject(
     private var subject: String,
     private var examDate: String,
-    private var requestDate: String
+    private var requestDate: String,
+    private val name: String, private val date: String
 ) : Serializable {
 
     companion object {
@@ -108,6 +109,23 @@ class Subject(
         } catch (_: JSONException) {
             throw Exception("Bad serialization of ${this}")
         }
+    }
+
+    private val topics = mutableListOf<String>()
+    fun getName(): String {
+        return name
+    }
+
+    fun getDate(): String {
+        return date
+    }
+
+    fun addTopic(topic: String) {
+        topics.add(topic)
+    }
+
+    fun getTopics(): List<String> {
+        return topics
     }
 
 
