@@ -23,6 +23,8 @@ import com.main.builder.generic.JSONBuilder
 import com.main.builder.generic.RequestFormHelper
 import com.objects.Subject
 import kotlinx.coroutines.InternalCoroutinesApi
+import org.json.JSONArray
+import org.json.JSONObject
 
 class AddSubjects : AppCompatActivity() {
     @OptIn(InternalCoroutinesApi::class)
@@ -36,9 +38,10 @@ class AddSubjects : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         val buttonSend = findViewById<Button>(R.id.button4)
         buttonSend.setOnClickListener {
-            val sub = buildSubject()
+            val sub = buildSubject()                   //metodi che costruiscono rispettivamente la materia, la data e la lista delle occorrenze.
             val date = buildDate();
             if (date == "Unsuccessful") {
                 Snackbar.make(findViewById(android.R.id.content), "Bad date format", Snackbar.LENGTH_LONG).show()
@@ -50,18 +53,17 @@ class AddSubjects : AppCompatActivity() {
             setContentView(R.layout.loading);
             try {
                 val t = Thread {
-                    sendRequest(subject, occ);
+                    val response = sendRequest(subject, occ);
 
                     runOnUiThread {
-                        NRequestsManager(applicationContext).addOne()
-                        setContentView(R.layout.request_success);
-                        findViewById<Button>(R.id.button6).setOnClickListener {
-                            setContentView(R.layout.activity_main);
-                            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-                                insets
-                            }
+                        if (response == "true") {
+                            // Ottieni la risposta JSON dal sender (ad esempio, da un file o direttamente dalla stringa di risposta)
+                            val jsonResponse = "" // Sostituisci con la logica per ottenere la risposta JSON
+                            val intent = Intent(this, Occurrence::class.java)
+                            intent.putExtra("responseJson", jsonResponse)
+                            startActivity(intent)
+                        } else {
+                            Snackbar.make(findViewById(android.R.id.content), "Request failed: $response", Snackbar.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -160,5 +162,52 @@ class AddSubjects : AppCompatActivity() {
         }
     }
 
+    private fun getResponseJson(): String {
+        // Implementa la logica per ottenere la risposta JSON
+        // Può essere una lettura da file o direttamente dalla stringa di risposta
+        // In questo esempio, restituisce una stringa JSON simulata
+        return """
+            [
+                {"subject": "Math", "date": "2023-05-28", "topic": "Algebra"},
+                {"subject": "Math", "date": "2023-05-28", "topic": "Geometry"},
+                {"subject": "Science", "date": "2023-05-28", "topic": "Physics"},
+                {"subject": "Science", "date": "2023-05-28", "topic": "Chemistry"}
+            ]
+        """
+    }
+
+    private fun parseResponse(responseJson: String): List<Subject> {
+        val subjects = mutableListOf<Subject>()
+        try {
+            val jsonArray = JSONArray(responseJson)
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val subjectName = jsonObject.getString("subject")
+                val date = jsonObject.getString("date")
+                val topic = jsonObject.getString("topic")
+
+                val subject = subjects.find { it.getName() == subjectName && it.getDate() == date } ?: Subject(subjectName, date).also { subjects.add(it) }
+                subject.addTopic(topic)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return subjects
+    }
+
+    private fun displaySubjectsAndTopics(subjects: List<Subject>) {
+        val textView = findViewById<TextView>(R.id.textViewSubjects)
+        val builder = StringBuilder()
+
+        subjects.forEach { subject ->
+            builder.append("Subject: ${subject.getName()}, Date: ${subject.getDate()}\n")
+            subject.getTopics().forEach { topic ->
+                builder.append(" - Topic: $topic\n")
+            }
+            builder.append("\n")
+        }
+
+        textView.text = builder.toString()
+    }
 
 }
