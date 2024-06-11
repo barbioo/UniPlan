@@ -11,7 +11,8 @@ class Subject(
     private var subject: String,
     private var examDate: String,
     private var requestDate: String,
-    private val name: String, private val date: String
+    private val name: String,
+    private val date: String
 ) : Serializable {
 
     companion object {
@@ -32,8 +33,12 @@ class Subject(
     constructor() : this(
         "default",
         "02-01-2000",
+        "01-01-2000",
+        "default",
         "01-01-2000"
     )
+
+
 
     constructor(fileName: String): this() {
         /*

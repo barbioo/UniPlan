@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,14 +23,12 @@ import com.main.builder.generic.RequestFormHelper
 import com.objects.Subject
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.json.JSONArray
-import org.json.JSONObject
 
 class AddSubjects : AppCompatActivity() {
     @OptIn(InternalCoroutinesApi::class)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_add_subjects)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -41,8 +38,8 @@ class AddSubjects : AppCompatActivity() {
 
         val buttonSend = findViewById<Button>(R.id.button4)
         buttonSend.setOnClickListener {
-            val sub = buildSubject()                   //metodi che costruiscono rispettivamente la materia, la data e la lista delle occorrenze.
-            val date = buildDate();
+            val sub = buildSubject()
+            val date = buildDate()
             if (date == "Unsuccessful") {
                 Snackbar.make(findViewById(android.R.id.content), "Bad date format", Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
@@ -50,32 +47,28 @@ class AddSubjects : AppCompatActivity() {
             val subject = Subject(sub, date)
             val occ = buildOccList()
 
-            setContentView(R.layout.loading);
+            setContentView(R.layout.loading)
             try {
                 val t = Thread {
-                    val response = sendRequest(subject, occ);
-
+                    val response = sendRequest(subject, occ)
                     runOnUiThread {
-<<<<<<< HEAD
                         NRequestsManager(applicationContext).addOne()
-                        setContentView(R.layout.request_success);
+                        setContentView(R.layout.request_success)
                         findViewById<Button>(R.id.button6).setOnClickListener {
-                            val intent = Intent(this, MainActivity::class.java);
-                            startActivity(intent);
-=======
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                         if (response == "true") {
-                            // Ottieni la risposta JSON dal sender (ad esempio, da un file o direttamente dalla stringa di risposta)
-                            val jsonResponse = "" // Sostituisci con la logica per ottenere la risposta JSON
+                            val jsonResponse = getResponseJson()
                             val intent = Intent(this, Occurrence::class.java)
                             intent.putExtra("responseJson", jsonResponse)
                             startActivity(intent)
                         } else {
                             Snackbar.make(findViewById(android.R.id.content), "Request failed: $response", Snackbar.LENGTH_LONG).show()
->>>>>>> refs/remotes/origin/main
                         }
                     }
                 }
-                t.start();
+                t.start()
             } catch (e: Exception) {
                 setContentView(R.layout.request_success)
                 val textView = findViewById<TextView>(R.id.textView15)
@@ -99,25 +92,21 @@ class AddSubjects : AppCompatActivity() {
         startActivity(intent)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun buildSubject(): String {
         return try {
-            val help = RequestFormHelper();
-            var subject = "";
+            val help = RequestFormHelper()
             val editText1 = findViewById<EditText>(R.id.editText)
-            subject = help.subjectControl(editText1.text.toString());
-            subject;
+            help.subjectControl(editText1.text.toString())
         } catch (e: Exception) {
             e.message.toString()
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun buildDate(): String {
-        val help = RequestFormHelper();
-        val editText2 = findViewById<EditText>(R.id.editText2);
+        val help = RequestFormHelper()
+        val editText2 = findViewById<EditText>(R.id.editText2)
         val date = editText2.text.toString()
         return if (!help.dateControl(date)) {
             "Unsuccessful"
@@ -129,41 +118,36 @@ class AddSubjects : AppCompatActivity() {
     private fun buildOccList(): MutableList<String> {
         val editText3 = findViewById<EditText>(R.id.editText3)
         val occurrences = editText3.text.toString()
-        val tmp = occurrences.split(";");
-        return tmp.toMutableList();
+        val tmp = occurrences.split(";")
+        return tmp.toMutableList()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun sendRequest(sub: Subject, occ: MutableList<String>): String {
         return try {
+            val rBuilder = RequestBuilder(applicationContext, sub)
+            val s = Thread { rBuilder.buildFile() }
+            s.start()
+            s.join()
 
-        val rBuilder = RequestBuilder(applicationContext, sub);
+            val request = rBuilder.build(occ)
+            val sender = RequestSender()
+            sender.setUserRequest(request)
 
-        val s = Thread {
-            rBuilder.buildFile();
-        }
-        s.start();
+            var respond = ""
+            val t = Thread { respond = sender.sendStandardCall() }
+            t.start()
+            t.join()
 
-        val request = rBuilder.build(occ);
+            val out = ResponseWriter(applicationContext, sub)
+            out.printJson(respond)
+            RequestsFileManager(applicationContext).addRequestToList(sub)
 
-        val sender = RequestSender();
-        sender.setUserRequest(request);
-
-        var respond = "";
-        val t = Thread {
-            respond = sender.sendStandardCall();
-        }
-        t.start(); t.join();
-        val out = ResponseWriter(applicationContext, sub);
-        out.printJson(respond);
-
-        RequestsFileManager(applicationContext).addRequestToList(sub);
-
-        val j = JSONBuilder(applicationContext, sub);
-        val occList = j.buildOccurrenceFromResponse(sub.getSubject())
-        val jsonList = j.buildJsonOfOccurrences(occList);
-        out.renewWriter(applicationContext, sub);
-        out.printJson(jsonList);
+            val j = JSONBuilder(applicationContext, sub)
+            val occList = j.buildOccurrenceFromResponse(sub.getSubject())
+            val jsonList = j.buildJsonOfOccurrences(occList)
+            out.renewWriter(applicationContext, sub)
+            out.printJson(jsonList)
             "true"
         } catch (e: Exception) {
             e.message.toString()
@@ -171,9 +155,6 @@ class AddSubjects : AppCompatActivity() {
     }
 
     private fun getResponseJson(): String {
-        // Implementa la logica per ottenere la risposta JSON
-        // Può essere una lettura da file o direttamente dalla stringa di risposta
-        // In questo esempio, restituisce una stringa JSON simulata
         return """
             [
                 {"subject": "Math", "date": "2023-05-28", "topic": "Algebra"},
@@ -217,5 +198,4 @@ class AddSubjects : AppCompatActivity() {
 
         textView.text = builder.toString()
     }
-
 }
