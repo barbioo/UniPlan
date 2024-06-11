@@ -112,7 +112,7 @@ class Dashboard : AppCompatActivity() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                text = "${subject.getRequestDate()}                                                                      ${subject.getRequestDate()}"
+                text = "${subject.getRequestDate()}                                                                      ${subject.getExamDate()}"
             }
             field.addView(dates)
 

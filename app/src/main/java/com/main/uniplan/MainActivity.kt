@@ -10,11 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.uniplan.R
 import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.RequestsFileManager
@@ -23,6 +26,7 @@ import com.main.builder.generic.JSONBuilder
 import com.objects.Subject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import objects.Occurrence
@@ -64,12 +68,14 @@ class MainActivity : AppCompatActivity() {
         }
         to.start(); to.join();*/
 
-        GlobalScope.launch {
+        lifecycleScope.launch {
             val occTodaysList = thereIsAOccurrences()
             if (occTodaysList.isNotEmpty()) {
-                buildButtons(occTodaysList);
+                buildButtons(occTodaysList)
             }
         }
+
+        buildProgressBars()
 
     }
 
@@ -128,21 +134,26 @@ class MainActivity : AppCompatActivity() {
             return res
         }
 
-        val deferredResults = requests.map { request ->
-            GlobalScope.async {
-                val sub = Subject(request)
-                val occList = JSONBuilder(applicationContext, sub).buildOccurrenceFromJson()
-                occList.firstOrNull { it.getDate() == todayDate() }
+        coroutineScope {
+            val deferredResults = requests.map { request ->
+                async {
+                    val sub = Subject(request)
+                    val occList = JSONBuilder(applicationContext, sub).buildOccurrenceFromJson()
+                    val dates = occList.map { occ ->
+                        occ.getDate().split("-").joinToString("-") { it.trimStart('0') }
+                    }
+                    occList.firstOrNull { dates.contains(todayDate()) }
+                }
+            }
+
+            deferredResults.forEach { deferred ->
+                val occurrence = deferred.await()
+                occurrence?.let { res.add(it) }
             }
         }
-
-        deferredResults.forEach { deferred ->
-            val occurrence = deferred.await()
-            occurrence?.let { res.add(it) }
-        }
-
         return res
     }
+
 
     private fun buildButtons(occList: MutableList<Occurrence>) {
         val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored;
@@ -161,6 +172,11 @@ class MainActivity : AppCompatActivity() {
                     addAsDone(occ);
                 }
                 t.start()
+
+                button.scaleX = 0.9f;
+                button.scaleY = 0.9f;
+                button.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
+                button.isEnabled = false;
             }
         }
     }
@@ -219,6 +235,50 @@ class MainActivity : AppCompatActivity() {
         }
         val res = JSONBuilder(applicationContext, subject).buildJsonOfOccurrences(list);
         ResponseWriter(applicationContext, subject).printJson(res);
+    }
+
+    private fun buildProgressBars() {
+        fun dpToPx(dp: Int): Int {
+            val density = resources.displayMetrics.density
+            return (dp * density).toInt()
+        }
+
+        val files = RequestsFileManager(applicationContext).getFilesNames();
+        if (files.isEmpty()) {
+            return;
+        }
+        val content = findViewById<LinearLayout>(R.id.progressBars);
+        content.removeAllViews()
+        for (subject in files) {
+            val subName = TextView(applicationContext).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                textAlignment = View.TEXT_ALIGNMENT_CENTER
+                setPadding(0, dpToPx(25), 0, 0)
+                textSize = 18f
+                text = subject.split("-")[0];
+            }
+            content.addView(subName)
+
+            val occList = JSONBuilder(applicationContext, subject).buildOccurrenceFromJson()
+            val totalOcc = occList.size
+            val doneOcc = occList.count { it.getDone() }
+            val progressPercentage = if (totalOcc > 0) (doneOcc * 100) / totalOcc else 0
+            val progressBar = ProgressBar(applicationContext, null, android.R.attr.progressBarStyleHorizontal).apply {
+                layoutParams = ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(dpToPx(15), dpToPx(10), dpToPx(15), 0)
+                }
+                isIndeterminate = false
+                max = 100
+                progress = progressPercentage
+            }
+            content.addView(progressBar)
+        }
     }
 
 }

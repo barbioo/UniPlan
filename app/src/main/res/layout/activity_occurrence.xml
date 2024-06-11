@@ -50,6 +50,7 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="132dp"
+        android:textSize="12dp"
         android:layout_height="105dp"
         android:onClick="dashboard"
         android:text="DASHBOARD"

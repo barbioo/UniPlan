@@ -55,6 +55,7 @@
         android:layout_height="105dp"
         android:onClick="dashboard"
         android:text="DASHBOARD"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.992"
@@ -107,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="addSubjects"
-        android:text="Add"
+        android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
@@ -156,7 +157,17 @@
             android:id="@+id/progressBars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="There are no subjects already\nClick 'ADD' button an make one!"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_marginTop="100dp"
+                android:textSize="15dp"/>
+        </LinearLayout>
     </ScrollView>
 
 
