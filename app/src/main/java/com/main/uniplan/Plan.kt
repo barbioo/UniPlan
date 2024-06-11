@@ -71,7 +71,7 @@ class Plan : AppCompatActivity() {
         return res;
     }
 
-    fun addButtons(context: Context, list: MutableList<Subject>) {
+    private fun addButtons(context: Context, list: MutableList<Subject>) {
         val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored
         var iterator = 0;
         for (sub in list.drop(1)) {

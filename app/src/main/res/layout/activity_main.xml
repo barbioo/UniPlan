@@ -80,7 +80,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SUBJECTS"
+        android:text="TODAY'S TOPICS:"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,9 +126,21 @@
         app:layout_constraintVertical_bias="0.229">
 
         <LinearLayout
+            android:id="@+id/subjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="There are no topics to study today!"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_marginTop="100dp"
+                android:textSize="15dp"/>
+        </LinearLayout>
     </ScrollView>
 
     <ScrollView
@@ -141,6 +153,7 @@
         app:layout_constraintVertical_bias="0.779">
 
         <LinearLayout
+            android:id="@+id/progressBars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
