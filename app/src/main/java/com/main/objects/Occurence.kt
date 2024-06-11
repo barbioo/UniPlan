@@ -60,5 +60,9 @@ class Occurrence(
         return "Occurrence(subject='$subject', date=$date, topic='$topic', done='$done')"
     }
 
+    fun equals(occurrence: Occurrence): Boolean {
+        return if (this.subject == occurrence.subject && this.topic == occurrence.topic && this.date == occurrence.date) true else false
+    }
+
 
 }
