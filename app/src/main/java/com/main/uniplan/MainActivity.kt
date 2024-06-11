@@ -10,20 +10,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.uniplan.AddSubjects
-import com.example.uniplan.Dashboard
-import com.example.uniplan.Plan
 import com.example.uniplan.R
-import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.generic.JSONBuilder
 import com.objects.Subject
 import objects.Occurrence
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 import java.time.LocalDate
 
 

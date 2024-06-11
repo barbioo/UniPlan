@@ -1,4 +1,4 @@
-package com.example.uniplan
+package com.main.uniplan
 
 import android.content.Intent
 import android.os.Build
@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.uniplan.R
 import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.NRequestsManager
 import com.main.builder.api.RequestBuilder
@@ -20,7 +21,6 @@ import com.main.builder.api.RequestsFileManager
 import com.main.builder.api.ResponseWriter
 import com.main.builder.generic.JSONBuilder
 import com.main.builder.generic.RequestFormHelper
-import com.main.uniplan.MainActivity
 import com.objects.Subject
 import kotlinx.coroutines.InternalCoroutinesApi
 

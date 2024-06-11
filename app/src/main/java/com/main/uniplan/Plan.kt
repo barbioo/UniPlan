@@ -1,40 +1,20 @@
-package com.example.uniplan
+package com.main.uniplan
 
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import android.graphics.Color;
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.uniplan.R
 import com.main.builder.api.RequestsFileManager
-import com.main.uniplan.MainActivity
 import com.objects.Subject
 
 

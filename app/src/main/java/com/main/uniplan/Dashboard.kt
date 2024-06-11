@@ -1,4 +1,4 @@
-package com.example.uniplan
+package com.main.uniplan
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.Text
+import com.example.uniplan.R
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.generic.JSONBuilder
-import com.main.uniplan.MainActivity
 import com.objects.Subject
 
 class Dashboard : AppCompatActivity() {

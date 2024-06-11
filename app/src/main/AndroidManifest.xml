@@ -20,19 +20,19 @@
         android:theme="@style/Theme.UniPlan"
         tools:targetApi="31">
         <activity
-            android:name=".Occurrence"
+            android:name="com.main.uniplan.Occurrence"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Dashboard"
+            android:name="com.main.uniplan.Dashboard"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".AddSubjects"
+            android:name="com.main.uniplan.AddSubjects"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Plan"
+            android:name="com.main.uniplan.Plan"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
