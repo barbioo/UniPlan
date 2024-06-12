@@ -47,6 +47,12 @@ class Plan : AppCompatActivity() {
         }
     }
 
+
+    fun occurrence(view: View?) {
+        val intent = Intent(this, Occurrence::class.java)
+        startActivity(intent)
+    }
+
     fun plan(view: View?) {
         val intent = Intent(this, Plan::class.java)
         startActivity(intent)

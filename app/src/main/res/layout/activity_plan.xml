@@ -19,12 +19,14 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="410dp"
+        android:layout_height="733dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/rootLayout"
@@ -36,10 +38,10 @@
 
             <Button
                 android:id="@+id/button7"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150dp"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="Subject\n\nexamDate                                                            requestDate" />
         </LinearLayout>
     </ScrollView>
@@ -111,5 +113,17 @@
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints"
         android:onClick="home" />
+
+    <Button
+        android:layout_width="141dp"
+        android:layout_height="69dp"
+        android:onClick="occurrence"
+        android:text="OCCURRENCE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.82"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
