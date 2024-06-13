@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="126dp"
-        android:layout_height="40dp"
+        android:layout_width="162dp"
+        android:layout_height="44dp"
         android:text="MY PLANS"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,19 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.059" />
-
-    <Button
-        android:id="@+id/buttonOccurrences"
-        android:layout_width="141dp"
-        android:layout_height="69dp"
-        android:onClick="occurrence"
-        android:text="OCCURRENCE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82"
-        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button1"

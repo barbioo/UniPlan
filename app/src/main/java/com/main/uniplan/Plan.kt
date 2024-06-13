@@ -1,5 +1,6 @@
 package com.main.uniplan
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -23,13 +24,6 @@ class Plan : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //aggiunto per far funzionare bottone occurrence
-        val buttonOccurrences = findViewById<Button>(R.id.buttonOccurrences)
-        buttonOccurrences.setOnClickListener {
-            val intent = Intent(this, Occurrence::class.java)
-            startActivity(intent)
-        }
-
         enableEdgeToEdge()
         val list = this.getAllSubject();
         if (list.isEmpty()) {
@@ -45,26 +39,14 @@ class Plan : AppCompatActivity() {
             first.text =
                 "${list[0].getSubject()}\n\n${list[0].getRequestDate()}                                                       ${list[0].getExamDate()}"
             first.setOnClickListener {
-                setContentView(R.layout.activity_main)
-                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    v.setPadding(
-                        systemBars.left,
-                        systemBars.top,
-                        systemBars.right,
-                        systemBars.bottom
-                    )
-                    insets
+                val intent = Intent(applicationContext, Occurrence::class.java);
+                intent.putExtra("subject", list[0].serialize());
+                if (applicationContext !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
+                applicationContext.startActivity(intent);
             }
             addButtons(applicationContext, list);
-        }
-
-        //nuovo pezzo per risolvere errore
-        val Occurrence = findViewById<Button>(R.id.buttonOccurrences)
-        buttonOccurrences?.setOnClickListener {
-            val intent = Intent(this, Occurrence::class.java)
-            startActivity(intent)
         }
 
     }
@@ -101,7 +83,6 @@ class Plan : AppCompatActivity() {
 
     private fun addButtons(context: Context, list: MutableList<Subject>) {
         val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored
-        var iterator = 0;
         for (sub in list.drop(1)) {
             val layout = findViewById<LinearLayout>(R.id.rootLayout);
             val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
@@ -109,16 +90,14 @@ class Plan : AppCompatActivity() {
                 "${sub.getSubject()}\n\n${sub.getRequestDate()}                                                       ${sub.getExamDate()}"
             newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
-
-                //pezzo nuovo
-                val intent = Intent(context, Occurrence::class.java)
-                //Occurence(list[iterator]);
-                intent.putExtra("subjectName", sub.getSubject())
-                intent.putExtra("subjectDate", sub.getDate())
-                startActivity(intent)
+                val intent = Intent(context, Occurrence::class.java);
+                intent.putExtra("subject", sub.serialize());
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                applicationContext.startActivity(intent);
             }
             layout.addView(newBtn)
-            iterator++;
         }
     }
 }

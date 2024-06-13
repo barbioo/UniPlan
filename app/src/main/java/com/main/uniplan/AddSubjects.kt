@@ -55,15 +55,11 @@ class AddSubjects : AppCompatActivity() {
                         NRequestsManager(applicationContext).addOne()
                         setContentView(R.layout.request_success)
                         findViewById<Button>(R.id.button6).setOnClickListener {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                        }
-                        if (response == "true") {
-                            val intent = Intent(this, Occurrence::class.java)
-                            //intent.putExtra("responseJson", jsonResponse)
-                            startActivity(intent)
-                        } else {
-                            Snackbar.make(findViewById(android.R.id.content), "Request failed: $response", Snackbar.LENGTH_LONG).show()
+                            setContentView(R.layout.request_success)
+                            findViewById<Button>(R.id.button6).setOnClickListener {
+                                val intent = Intent(this, MainActivity::class.java);
+                                applicationContext.startActivity(intent);
+                            }
                         }
                     }
                 }
