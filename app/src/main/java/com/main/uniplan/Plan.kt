@@ -22,6 +22,14 @@ class Plan : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //aggiunto per far funzionare bottone occurrence
+        val buttonOccurrences = findViewById<Button>(R.id.buttonOccurrences)
+        buttonOccurrences.setOnClickListener {
+            val intent = Intent(this, Occurrence::class.java)
+            startActivity(intent)
+        }
+
         enableEdgeToEdge()
         val list = this.getAllSubject();
         if (list.isEmpty()) {
@@ -34,18 +42,38 @@ class Plan : AppCompatActivity() {
                 insets
             }
             val first = findViewById<Button>(R.id.button7);
-            first.text = "${list[0].getSubject()}\n\n${list[0].getRequestDate()}                                                       ${list[0].getExamDate()}"
+            first.text =
+                "${list[0].getSubject()}\n\n${list[0].getRequestDate()}                                                       ${list[0].getExamDate()}"
             first.setOnClickListener {
                 setContentView(R.layout.activity_main)
                 ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                    v.setPadding(
+                        systemBars.left,
+                        systemBars.top,
+                        systemBars.right,
+                        systemBars.bottom
+                    )
                     insets
                 }
             }
             addButtons(applicationContext, list);
         }
+
+        //nuovo pezzo per risolvere errore
+        val Occurrence = findViewById<Button>(R.id.buttonOccurrences)
+        buttonOccurrences?.setOnClickListener {
+            val intent = Intent(this, Occurrence::class.java)
+            startActivity(intent)
+        }
+
     }
+
+    fun occurrence(view: View?) {
+        val intent = Intent(this, Occurrence::class.java)
+        startActivity(intent)
+    }
+
 
     fun plan(view: View?) {
         val intent = Intent(this, Plan::class.java)
@@ -77,18 +105,20 @@ class Plan : AppCompatActivity() {
         for (sub in list.drop(1)) {
             val layout = findViewById<LinearLayout>(R.id.rootLayout);
             val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
-            newBtn.text = "${sub.getSubject()}\n\n${sub.getRequestDate()}                                                       ${sub.getExamDate()}"
+            newBtn.text =
+                "${sub.getSubject()}\n\n${sub.getRequestDate()}                                                       ${sub.getExamDate()}"
             newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
-                /* val intent = Intent(context, Occurrence::class.java)
-                Occurence(list[iterator]);
-                startActivity(intent)*/
+
+                //pezzo nuovo
+                val intent = Intent(context, Occurrence::class.java)
+                //Occurence(list[iterator]);
+                intent.putExtra("subjectName", sub.getSubject())
+                intent.putExtra("subjectDate", sub.getDate())
+                startActivity(intent)
             }
             layout.addView(newBtn)
             iterator++;
         }
     }
-
-
-
 }
