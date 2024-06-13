@@ -115,6 +115,7 @@
         android:onClick="home" />
 
     <Button
+        android:id="@+id/buttonOccurrences"
         android:layout_width="141dp"
         android:layout_height="69dp"
         android:onClick="occurrence"

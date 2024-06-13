@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.objects.Subject
 import org.json.JSONArray
+import android.content.Context
 
 
 
@@ -29,13 +30,40 @@ class Occurrence : AppCompatActivity() {
             insets
         }
 
-        val responseJson = intent.getStringExtra("responseJson") ?: ""
-        parseResponse(responseJson)
-        displaySubjectsAndTopics()
+        //nuovi valori per metodo parseresponse
+        val subjectName = intent.getStringExtra("subjectName") ?: ""
+        val subjectDate = intent.getStringExtra("subjectDate") ?: ""
+        loadOccurrences(subjectName, subjectDate)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun parseResponse(responseJson: String) {
+    private fun loadOccurrences(subjectName: String, subjectDate: String) {
+        // Fetch occurrences data from shared preferences or another storage method
+        val sharedPref = getSharedPreferences("OccurrencesData", Context.MODE_PRIVATE)
+        val responseJson = sharedPref.getString("responseJson", "") ?: ""
+
+        //nuovo per metodo parseresponse
+        parseResponse(responseJson, subjectName, subjectDate)
+        displaySubjectsAndTopics()
+    }
+
+    private fun displaySubjectsAndTopics() {
+        val textView: TextView = findViewById(R.id.textViewSubjects)
+        val builder = StringBuilder()
+
+        subjects.forEach { subject ->
+            builder.append("Subject: ${subject.getName()}, Date: ${subject.getDate()}\n")
+            subject.getTopics().forEach { topic ->
+                builder.append(" - Topic: $topic\n")
+            }
+            builder.append("\n")
+        }
+
+        textView.text = builder.toString()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun parseResponse(responseJson: String, subjectName: String, subjectDate: String) {
         try {
             val jsonArray = JSONArray(responseJson)
             for (i in 0 until jsonArray.length()) {
@@ -62,22 +90,6 @@ class Occurrence : AppCompatActivity() {
         val newSubject = Subject(name, date)
         subjects.add(newSubject)
         return newSubject
-    }
-
-
-    private fun displaySubjectsAndTopics() {
-        val textView: TextView = findViewById(R.id.textViewSubjects)
-        val builder = StringBuilder()
-
-        subjects.forEach { subject ->
-            builder.append("Subject: ${subject.getName()}, Date: ${subject.getDate()}\n")
-            subject.getTopics().forEach { topic ->
-                builder.append(" - Topic: $topic\n")
-            }
-            builder.append("\n")
-        }
-
-        textView.text = builder.toString()
     }
 
 
