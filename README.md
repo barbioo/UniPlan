@@ -1,10 +1,14 @@
 # UniPlan
-Ogni volta che si fa un push controllare che il file local.properties sia configurato correttamente.
-<<<<<<< HEAD
 
+UniPlan è un'applicazione Android che sfrutta l'inteligenza artificiale per creare
+piani di studio e sessioni programmate, facilitando di molto l'organizzazione dello studio.
 
-SDK_Barbio=/Users/lorenzo/Library/Android/sdk
-=======
-andre:
-C\:\\Users\\ciapa\\AppData\\Local\\Android\\Sdk 
->>>>>>> refs/remotes/origin/main
+L'app è composta da tre schermate principali:
+- Una home da cui è possibile aggiungere un nuovo piano di studio, visualizzare gli argomenti del 
+  e vedere i propri progressi delle varie materie. Cliccando su un argomento, sarà possibile
+  contrassegnarlo come eseguito, aumentando così la barra del progresso.
+- Una dashboard in cui è possibile vedere tutti i piani di studio, con barra dei progressi ed 
+  argomenti svolti/da svolgere.
+- Una sezione dove sono raffigurati tutti i piani, cliccando su ognuno di essi è possibile accedere
+  alla lista degli argomenti di quell'esame e, cliccando su uno di essi, sarà possibile aggiungerlo
+  al calendario

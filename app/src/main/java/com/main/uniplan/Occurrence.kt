@@ -20,6 +20,7 @@ import android.view.ContextThemeWrapper
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.compose.material3.TextField
+import com.main.builder.calendar.CalendarBuilder
 import com.main.builder.generic.JSONBuilder
 
 
@@ -67,7 +68,7 @@ class Occurrence : AppCompatActivity() {
                 "${occ.getTopic()}\n\n${occ.getDate()}"
             newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
             newBtn.setOnClickListener {
-
+                CalendarBuilder(applicationContext, occ).insertEvent();
             }
             layout.addView(newBtn)
         }
