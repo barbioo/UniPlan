@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.uniplan.R
+import com.main.uniplan.R
 import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.api.ResponseWriter

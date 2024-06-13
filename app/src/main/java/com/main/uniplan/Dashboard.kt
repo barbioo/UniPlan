@@ -9,7 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.uniplan.R
+import com.main.uniplan.R
 import com.main.builder.api.RequestsFileManager
 import com.main.builder.generic.JSONBuilder
 import com.objects.Subject

@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.uniplan.R
+import com.main.uniplan.R
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.objects.Subject

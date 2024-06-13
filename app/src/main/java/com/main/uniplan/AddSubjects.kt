@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.uniplan.R
+import com.main.uniplan.R
 import com.google.android.material.snackbar.Snackbar
 import com.main.builder.api.NRequestsManager
 import com.main.builder.api.RequestBuilder

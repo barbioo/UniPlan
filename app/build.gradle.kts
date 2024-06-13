@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.uniplan"
+    namespace = "com.main.uniplan"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.uniplan"
+        applicationId = "com.main.uniplan"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
