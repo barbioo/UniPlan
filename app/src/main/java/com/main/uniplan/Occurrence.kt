@@ -14,11 +14,16 @@ import androidx.annotation.RequiresApi
 import com.objects.Subject
 import org.json.JSONArray
 import android.content.Context
-
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.view.ContextThemeWrapper
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.compose.material3.TextField
+import com.main.builder.generic.JSONBuilder
 
 
 class Occurrence : AppCompatActivity() {
-    private val subjects: MutableList<Subject> = mutableListOf()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,67 +34,10 @@ class Occurrence : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        //nuovi valori per metodo parseresponse
-        val subjectName = intent.getStringExtra("subjectName") ?: ""
-        val subjectDate = intent.getStringExtra("subjectDate") ?: ""
-        loadOccurrences(subjectName, subjectDate)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun loadOccurrences(subjectName: String, subjectDate: String) {
-        // Fetch occurrences data from shared preferences or another storage method
-        val sharedPref = getSharedPreferences("OccurrencesData", Context.MODE_PRIVATE)
-        val responseJson = sharedPref.getString("responseJson", "") ?: ""
-
-        //nuovo per metodo parseresponse
-        parseResponse(responseJson, subjectName, subjectDate)
-        displaySubjectsAndTopics()
-    }
-
-    private fun displaySubjectsAndTopics() {
-        val textView: TextView = findViewById(R.id.textViewSubjects)
-        val builder = StringBuilder()
-
-        subjects.forEach { subject ->
-            builder.append("Subject: ${subject.getName()}, Date: ${subject.getDate()}\n")
-            subject.getTopics().forEach { topic ->
-                builder.append(" - Topic: $topic\n")
-            }
-            builder.append("\n")
+        val subject = intent.getStringExtra("subject")?.let { Subject.deserialize(it) };
+        if (subject != null) {
+            buildButtons(applicationContext, subject)
         }
-
-        textView.text = builder.toString()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun parseResponse(responseJson: String, subjectName: String, subjectDate: String) {
-        try {
-            val jsonArray = JSONArray(responseJson)
-            for (i in 0 until jsonArray.length()) {
-                val jsonObject = jsonArray.getJSONObject(i)
-                val subjectName = jsonObject.getString("subject")
-                val date = jsonObject.getString("date")
-                val topic = jsonObject.getString("topic")
-
-                val subject = findOrCreateSubject(subjectName, date)
-                subject.addTopic(topic)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun findOrCreateSubject(name: String, date: String): Subject {
-        for (subject in subjects) {
-            if (subject.getName() == name && subject.getDate() == date) {
-                return subject
-            }
-        }
-        val newSubject = Subject(name, date)
-        subjects.add(newSubject)
-        return newSubject
     }
 
 
@@ -106,5 +54,22 @@ class Occurrence : AppCompatActivity() {
     fun home(view: View?) {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun buildButtons(context: Context, subject: Subject) {
+        val occList = JSONBuilder(applicationContext, subject).buildOccurrenceFromJson();
+        val buttonStyle = androidx.appcompat.R.style.Widget_AppCompat_Button_Colored
+
+        val layout = findViewById<LinearLayout>(R.id.occurrences_container);
+        for (occ in occList) {
+            val newBtn = Button(ContextThemeWrapper(context, buttonStyle), null, buttonStyle)
+            newBtn.text =
+                "${occ.getTopic()}\n\n${occ.getDate()}"
+            newBtn.backgroundTintList = ColorStateList.valueOf(Color.rgb(96, 60, 154))
+            newBtn.setOnClickListener {
+
+            }
+            layout.addView(newBtn)
+        }
     }
 }

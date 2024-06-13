@@ -32,6 +32,9 @@ import kotlinx.serialization.json.Json
 import objects.Occurrence
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import java.time.LocalDate
 
 
@@ -99,20 +102,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun isOnline(): Boolean {
-        val client = OkHttpClient();
-        val request = Request.Builder()
-            .url("https://jsonplaceholder.typicode.com/posts")
-            .get()
-            .build();
-        return try {
-            client.newCall(request).execute().toString()
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun thereIsAOccurrences(): MutableList<Occurrence> {
         val res = mutableListOf<Occurrence>()
@@ -142,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                     val dates = occList.map { occ ->
                         occ.getDate().split("-").joinToString("-") { it.trimStart('0') }
                     }
-                    occList.firstOrNull { dates.contains(todayDate()) }
+                    occList.firstOrNull { dates.contains(todayDate()) && !it.getDone()}
                 }
             }
 
@@ -178,6 +167,9 @@ class MainActivity : AppCompatActivity() {
                 button.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
                 button.isEnabled = false;
             }
+
+            Thread.sleep(2000);
+            buildProgressBars()
         }
     }
 
